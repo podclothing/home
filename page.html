@@ -2,10 +2,22 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- 告知浏览器不进行强缓存，每次都向服务器验证 -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<script>
+// 防缓存：若浏览器/CDN 缓存了旧版本页，通过版本戳验证并提示强刷
+(function(){
+try{
+  var v='v20260918';  // 版本戳，每次发布更新
+  document.documentElement.setAttribute('data-build',v);
+  if(location.search.indexOf('v=')<0){
+    // 记录本次加载的版本，供二次打开对照
+    try{sessionStorage.setItem('kw_build',v)}catch(e){}
+  }
+}catch(e){}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>印花服饰主页 | 市场热搜 & 节日活动日历 & 传品类目 & 品类资料 & 联系方式</title>
 <style>
@@ -1382,8 +1394,15 @@ initContacts();
 initStudyData();
 renderCalendar();
 setTimeout(renderWordCloud,200);
-attachGlobalUrlSync();
-applyUrlParams();
+// 初始化：DOM 就绪后再应用 URL 参数（防止脚本时机问题导致参数不生效）
+function initAfterDom(){
+  try{attachGlobalUrlSync();applyUrlParams();}catch(e){console.error('url-param init error',e)}
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initAfterDom);
+}else{
+  initAfterDom();
+}
 
 // ===== EXCEL EXPORT (minimal xlsx) =====
 function xlsxColLetter(n){var s='';n++;while(n>0){var m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=(n-m-1)/26;}return s}

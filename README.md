@@ -5,56 +5,70 @@
 ## 目录结构
 
 ```
-├── index.html          # 主页面（约 1MB）
+├── index.html          # 主页面
 ├── images/
-│   ├── top/            # 趋势商品图 + 二维码（WebP，约 5MB）
+│   ├── top/            # 趋势商品图（12个分类子目录 + 联系人二维码）
+│   │   ├── tshirt/     # T恤
+│   │   ├── polo/       # POLO
+│   │   ├── weiyi/      # 卫衣/帽衫
+│   │   ├── maoyi/      # 毛衣
+│   │   ├── chenshan/   # 衬衫/马甲
+│   │   ├── xifu/       # 西服
+│   │   ├── duanku/     # 短裤
+│   │   ├── changku/    # 长裤
+│   │   ├── dama/       # 大码男装
+│   │   ├── nantong/    # 男童全品类
+│   │   ├── nv_tong/    # 女童全品类
+│   │   └── riben/      # 日本/东南亚-男装
+│   ├── trend/          # 本季趋势 - 欧洲/料码系列（9个分类子目录）
 │   └── qr/             # 原始联系人二维码备份
 └── README.md
 ```
 
-## 部署到 GitHub Pages（推荐）
+## 本季趋势商品分类（21个）
+
+| 分类 | 运营 | 图片数 |
+|------|------|--------|
+| T恤 | 马洛/春可期/暮星遥 | 177 |
+| POLO | 空亦鹤 | 125 |
+| 背心 | 暮星遥 | 45 |
+| 球衣 | 暮星遥 | 162 |
+| 套装 | 春可期 | 176 |
+| 外套/夹克/棉羽 | 春可期 | 117 |
+| 卫衣/帽衫 | 暮星遥 | 200 |
+| 毛衣 | 暮星遥 | 36 |
+| 衬衫/马甲 | 马洛 | 190 |
+| 西服 | 春可期 | 47 |
+| 短裤 | 成桂零 | 74 |
+| 长裤 | 成桂零 | 73 |
+| 大码男装 | 空亦鹤 | 103 |
+| 男童全品类 | 弥浅芽 | 166 |
+| 女童全品类 | 孙晓轩 | 168 |
+| 日本/东南亚-男装 | 成桂零 | 200 |
+| 欧洲-标码男装 | 王西凛/序申秋 | 200 |
+| 澳新/拉美-标码男装 | 窦明煜 | 200 |
+| 欧洲-标码裤子 | 序申秋 | 200 |
+| 欧洲-童装 | 窦明煜 | 200 |
+| 欧洲-大码男装 | 窦明煜 | 200 |
+
+> 每个分类图片数上限 200，不足时以源数据实际数量为准。图片均外置 WebP + 懒加载，首屏加载快。
+
+## 部署到 GitHub Pages
 
 1. 在 GitHub 新建空仓库（例如 `print-trend-center`）
-2. 本地执行：
-
-```bash
-cd github-deploy
-git init
-git add .
-git commit -m "印花趋势中心：图片外置 WebP 版"
-git branch -M main
-git remote add origin https://github.com/你的用户名/仓库名.git
-git push -u origin main
-```
-
-3. 仓库 **Settings → Pages**
-   - Source：Deploy from a branch
-   - Branch：`main` / `/ (root)`
-   - 保存后等待 1–2 分钟
-4. 访问：`https://你的用户名.github.io/仓库名/`
-
-## 体积说明
-
-| 项目 | 原版 | 本版 |
-|------|------|------|
-| 单文件 HTML | ~63 MB（base64 内嵌） | ~0.9 MB |
-| 图片 | 内嵌 | 独立 WebP ~5 MB |
-| 总计 | 63 MB 一次下载 | 首屏小，图片按需加载 |
-
-所有 `<img>` 已加 `loading="lazy"` + `decoding="async"`。
+2. 把本目录内容推送到仓库 main 分支
+3. 仓库 Settings → Pages → Source: Deploy from a branch → main
+4. 等待发布后访问 `https://你的用户名.github.io/仓库名/`
 
 ## 本地预览
 
 ```bash
-# 任意静态服务器
-npx serve .
-# 或
 python3 -m http.server 8080
+# 浏览器打开 http://localhost:8080
 ```
-
-浏览器打开 `http://localhost:8080` 即可。
 
 ## 注意
 
 - 不要再把图片 base64 写回 HTML
-- 新增商品图请放到 `images/top/`，在 HTML 里用相对路径引用
+- 新增商品图放到对应 `images/top/<分类>/`，在 HTML 里用相对路径引用
+- 版本戳：v20261009-owner-v14

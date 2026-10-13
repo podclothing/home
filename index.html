@@ -10,7 +10,7 @@
 // 防缓存：若浏览器/CDN 缓存了旧版本页，通过版本戳验证并提示强刷
 (function(){
 try{
-  var v='v20261010-ops-info-v20';  // 版本戳，每次发布更新
+  var v='v20261013-share-url-v21';  // 版本戳，每次发布更新
   document.documentElement.setAttribute('data-build',v);
   if(location.search.indexOf('v=')<0){
     // 记录本次加载的版本，供二次打开对照
@@ -1585,7 +1585,9 @@ function switchTab(tabName,btn){
   if(target)target.classList.add('active');
   if(btn)btn.classList.add('active');
   if(tabName==='hotsearch')setTimeout(renderWordCloud,100);
-  if(tabName==='top')window.scrollTo({top:0,behavior:'smooth'});
+  if(tabName==='top'){try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}
+  // 切换 Tab 同步地址栏，保证直接复制地址栏链接也能定位到当前 Tab
+  if(window.updateShareUrl)updateShareUrl();
 }
 
 // ===== FESTIVAL =====
@@ -2268,8 +2270,13 @@ var SHARE_FIELDS=[
   {tab:'resource',  id:'studyCatFilter',     p:'scat', refresh:'renderStudyTable'},
   {tab:'resource',  id:'studySearchBox',     p:'ssearch', refresh:'renderStudyTable'},
   {tab:'resource',  id:'liveMonthSelect',    p:'lmon', refresh:'renderCalendar'},
-  {tab:'resource',  id:'liveView',           p:'lview', refresh:'', special:'lview'}
+  {tab:'resource',  id:'liveView',           p:'lview', refresh:'', special:'liveView'}
 ];
+// 首次进入页面时先把地址栏参数快照下来：后续各 Tab 初始化渲染会调用 updateShareUrl 改写 URL，
+// 若不快照，applyUrlParams 读到的就是被改写成默认 Tab 的地址，导致分享链接失效。
+var INITIAL_SEARCH=(function(){try{return location.search||''}catch(e){return ''}})();
+var URL_PARAMS_READY=false;      // URL 参数是否已应用过一次
+var APPLYING_URL_PARAMS=false;   // 是否正在应用 URL 参数（期间禁止回写地址栏）
 function gv(id){var e=document.getElementById(id);return e?e.value:''}
 function getFieldVal(f){
   if(f.special==='cat'){
@@ -2285,7 +2292,7 @@ function getFieldVal(f){
 }
 function currentVal(f){
   var v=getFieldVal(f);
-  return ((v===null||v===undefined||v==='')||(f.special==='period'&&v==='W41'))?'':v;
+  return ((v===null||v===undefined||v==='')||(f.special==='period'&&v==='W41')||(f.special==='liveView'&&v==='calendar'))?'':v;
 }
 function buildShareUrl(){
   var p=new URLSearchParams();
@@ -2302,6 +2309,7 @@ function buildShareUrl(){
   return q?base+'?'+q:base;
 }
 function updateShareUrl(){
+  if(!URL_PARAMS_READY||APPLYING_URL_PARAMS)return;   // 参数应用完成前不回写地址栏
   var u=buildShareUrl();
   if(location.href!==u){try{history.replaceState(null,'',u)}catch(e){}}
 }
@@ -2336,75 +2344,85 @@ function applyLiveView(view){
   if(typeof switchLiveView==='function')switchLiveView(view);
 }
 function applyUrlParams(){
-  var p=new URLSearchParams(location.search);
-  // 1) 定位 tab
-  var tab=p.get('tab');
-  var tabBtn=null;
-  if(tab){
-    var allBtns=document.querySelectorAll('.tab-btn');
-    for(var i=0;i<allBtns.length;i++){
-      var oc=allBtns[i].getAttribute&&allBtns[i].getAttribute('onclick')||(allBtns[i].onclick&&allBtns[i].onclick+'')||'';
-      if((allBtns[i].dataset&&allBtns[i].dataset.tab===tab)||oc.indexOf("switchTab('"+tab+"'")>=0||oc.indexOf('switchTab("'+tab+'"')>=0){tabBtn=allBtns[i];break}
+  APPLYING_URL_PARAMS=true;
+  try{
+    var p=new URLSearchParams(URL_PARAMS_READY?location.search:(INITIAL_SEARCH||location.search));
+    // 1) 定位 tab
+    var tab=p.get('tab');
+    var tabBtn=null;
+    if(tab){
+      var allBtns=document.querySelectorAll('.tab-btn');
+      for(var i=0;i<allBtns.length;i++){
+        var oc=allBtns[i].getAttribute&&allBtns[i].getAttribute('onclick')||(allBtns[i].onclick&&allBtns[i].onclick+'')||'';
+        if((allBtns[i].dataset&&allBtns[i].dataset.tab===tab)||oc.indexOf("switchTab('"+tab+"'")>=0||oc.indexOf('switchTab("'+tab+'"')>=0){tabBtn=allBtns[i];break}
+      }
     }
+    // 先切换 Tab，再做字段回填：即使后面某个字段处理出错，页面也停在链接指定的 Tab 上
+    if(tab&&tabBtn&&typeof switchTab==='function'){switchTab(tab,tabBtn);}
+    // 2) 处理 global tab (resource)
+    var paramMap={};
+    SHARE_FIELDS.forEach(function(f){paramMap[f.p]=f});
+    // apply in defined order (依赖顺序在SHARE_FIELDS里已排好)
+    var doCtype=null,doCl1=null;
+    SHARE_FIELDS.forEach(function(f){
+      var raw=p.get(f.p);
+      if(raw===null||raw===undefined||raw==='')return;
+      var el=document.getElementById(f.id);
+      if(f.special==='cat'){
+        // 高亮分类按钮 + 设置下拉
+        var cbtn=document.querySelector('.kw-cat-btn[data-cat="'+raw+'"]');
+        if(typeof setKwCat==='function')setKwCat(raw,cbtn);
+        else if(el)el.value=raw;
+        return;
+      }
+      if(f.special==='period'){
+        var kp=document.getElementById('kwPeriod');
+        if(kp){
+          kp.value=raw;
+          if(typeof selectPeriod==='function')selectPeriod(raw);   // 带周期刷新，避免无参调用丢失周期
+          else currentPeriod=raw;
+        }
+        return;
+      }
+      if(f.special==='liveView')return;   // 仅记录，后续按 lview 处理；不可污染 doCtype
+      if(f.special==='ctype'){doCtype=f;if(el)el.value=raw;return;}
+      if(f.special==='cl1'){doCl1=f;if(el)el.value=raw;return;}
+      if(el)el.value=raw;
+    });
+    // 3) 触发级联刷新（switchCatType 会清空层级/搜索，故先重建再恢复全部 category 值）
+    var anyCat=doCtype||doCl1||p.get('cl2')||p.get('cpeople')||p.get('csearch');
+    if(doCtype&&typeof switchCatType==='function')switchCatType();
+    if(anyCat){
+      if(typeof refreshCatLevels==='function')refreshCatLevels();   // 重算二级下拉
+      var cl1=p.get('cl1'),cl2=p.get('cl2'),cp=p.get('cpeople'),cs=p.get('csearch');
+      var lvl1=document.getElementById('catLevel1'),lvl2=document.getElementById('catLevel2');
+      var pe=document.getElementById('catPeople'),csb=document.getElementById('catSearchBox');
+      if(lvl1&&cl1)lvl1.value=cl1;
+      if(lvl2&&cl2)lvl2.value=cl2;
+      if(pe&&cp)pe.value=cp;
+      if(csb&&cs)csb.value=cs;
+      if(typeof applyCatFilters==='function')applyCatFilters();
+    }
+    // 4) 按字段 refresh 去重触发
+    var applied={};
+    SHARE_FIELDS.forEach(function(f){
+      var raw=p.get(f.p);
+      if(raw===null||raw===undefined||raw==='')return;
+      // category 级联字段已在 step3 处理，跳过这里避免重复清空
+      if(f.special==='cl1'||f.special==='ctype'||f.special==='period'||f.special==='cat'||f.p==='cl2'||f.p==='cpeople'||f.p==='csearch')return;
+      if(f.refresh&&!applied[f.refresh]&&typeof window[f.refresh]==='function'){
+        applied[f.refresh]=1;
+        window[f.refresh]();
+      }
+    });
+    // 5) lview 应用
+    var lv=p.get('lview');
+    if(lv&&typeof applyLiveView==='function')applyLiveView(lv);
+  }finally{
+    APPLYING_URL_PARAMS=false;
+    URL_PARAMS_READY=true;
+    updateShareUrl();
   }
-  // 2) 处理 global tab (resource)
-  var paramMap={};
-  SHARE_FIELDS.forEach(function(f){paramMap[f.p]=f});
-  // apply in defined order (依赖顺序在SHARE_FIELDS里已排好)
-  var doCtype=null,doCl1=null;
-  SHARE_FIELDS.forEach(function(f){
-    var raw=p.get(f.p);
-    if(raw===null||raw===undefined||raw==='')return;
-    var el=document.getElementById(f.id);
-    if(f.special==='cat'){
-      // 高亮分类按钮 + 设置下拉
-      var cbtn=document.querySelector('.kw-cat-btn[data-cat="'+raw+'"]');
-      if(typeof setKwCat==='function')setKwCat(raw,cbtn);
-      else if(el)el.value=raw;
-      return;
-    }
-    if(f.special==='period'){
-      var kp=document.getElementById('kwPeriod');
-      if(kp){kp.value=raw;currentPeriod=raw;}
-      return;
-    }
-    if(f.special==='liveView'){doCtype=f;return;}
-    if(f.special==='ctype'){doCtype=f;if(el)el.value=raw;return;}
-    if(f.special==='cl1'){doCl1=f;if(el)el.value=raw;return;}
-    if(el)el.value=raw;
-  });
-  // 3) 触发级联刷新（switchCatType 会清空层级/搜索，故先重建再恢复全部 category 值）
-  var anyCat=doCtype||doCl1||p.get('cl2')||p.get('cpeople')||p.get('csearch');
-  if(doCtype&&typeof switchCatType==='function')switchCatType();
-  if(anyCat){
-    if(typeof refreshCatLevels==='function')refreshCatLevels();   // 重算二级下拉
-    var cl1=p.get('cl1'),cl2=p.get('cl2'),cp=p.get('cpeople'),cs=p.get('csearch');
-    var lvl1=document.getElementById('catLevel1'),lvl2=document.getElementById('catLevel2');
-    var pe=document.getElementById('catPeople'),csb=document.getElementById('catSearchBox');
-    if(lvl1&&cl1)lvl1.value=cl1;
-    if(lvl2&&cl2)lvl2.value=cl2;
-    if(pe&&cp)pe.value=cp;
-    if(csb&&cs)csb.value=cs;
-    if(typeof applyCatFilters==='function')applyCatFilters();
-  }
-  // 4) 按字段 refresh 去重触发
-  var applied={};
-  SHARE_FIELDS.forEach(function(f){
-    var raw=p.get(f.p);
-    if(raw===null||raw===undefined||raw==='')return;
-    // category 级联字段已在 step3 处理，跳过这里避免重复清空
-    if(f.special==='cl1'||f.special==='ctype'||f.p==='cl2'||f.p==='cpeople'||f.p==='csearch')return;
-    if(f.refresh&&!applied[f.refresh]&&typeof window[f.refresh]==='function'){
-      applied[f.refresh]=1;
-      window[f.refresh]();
-    }
-  });
-  // 5) 若带 tab 且有对应按钮则切过去
-  if(tab&&tabBtn&&typeof switchTab==='function'){switchTab(tab,tabBtn);}
-  // 6) lview 应用
-  var lv=p.get('lview');
-  if(lv&&typeof applyLiveView==='function')applyLiveView(lv);
-  updateShareUrl();
 }
 
 

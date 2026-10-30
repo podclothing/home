@@ -1017,7 +1017,8 @@ div.ops-region,
 <div class="brand-sub">男装、童装、大码趋势商品</div>
 </div>
 <div class="sidebar-menu">
-<button class="tab-btn" id="topTabBtn" data-tab="top" onclick="onTopTabClick(this)"><span class="nav-no">01</span><span class="nav-label">本季趋势商品</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" onclick="switchTab('creative',this)"><span class="nav-no">01</span><span class="nav-label">爆款二次创意参考</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" id="topTabBtn" data-tab="top" onclick="onTopTabClick(this)"><span class="nav-no">02</span><span class="nav-label">本季趋势商品</span><span class="nav-arrow">▶</span></button>
 <div class="side-sub collapsed" id="topSideSub">
 <button class="side-anchor" type="button" onclick="openTopCategory(0)">T恤</button>
 <button class="side-anchor" type="button" onclick="openTopCategory(1)">POLO</button>
@@ -1042,16 +1043,27 @@ div.ops-region,
 <button class="side-anchor" type="button" onclick="openTopCategory(20)">欧洲-大码男装</button>
 </div>
 
-<button class="tab-btn" onclick="switchTab('hotsearch',this)"><span class="nav-no">02</span><span class="nav-label">市场热搜 &amp; 趋势</span><span class="nav-arrow">▶</span></button>
-<button class="tab-btn" onclick="switchTab('festival',this)"><span class="nav-no">03</span><span class="nav-label">节日活动日历</span><span class="nav-arrow">▶</span></button>
-<button class="tab-btn" onclick="switchTab('category',this)"><span class="nav-no">04</span><span class="nav-label">传品类目</span><span class="nav-arrow">▶</span></button>
-<button class="tab-btn" onclick="switchTab('resource',this)"><span class="nav-no">05</span><span class="nav-label">品类资料中心</span><span class="nav-arrow">▶</span></button>
-<button class="tab-btn active" onclick="switchTab('contact',this)"><span class="nav-no">06</span><span class="nav-label">运营联系方式</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" onclick="switchTab('hotsearch',this)"><span class="nav-no">03</span><span class="nav-label">市场热搜 &amp; 趋势</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" onclick="switchTab('festival',this)"><span class="nav-no">04</span><span class="nav-label">节日活动日历</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" onclick="switchTab('category',this)"><span class="nav-no">05</span><span class="nav-label">传品类目</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" onclick="switchTab('resource',this)"><span class="nav-no">06</span><span class="nav-label">品类资料中心</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn active" onclick="switchTab('contact',this)"><span class="nav-no">07</span><span class="nav-label">运营联系方式</span><span class="nav-arrow">▶</span></button>
 </div>
 <button class="sidebar-share" onclick="copyShareUrl()">↗ 复制当前视图链接</button>
 </div>
 <div class="reference-main">
 <!-- TAB 0: TOP 商品 -->
+<div class="tab-content" id="tab-creative">
+<div class="page-header"><h1>🎨 爆款二次创意参考</h1><p>基于爆款款式与花型的二次创意视觉库 | AI 延伸主图 + 模特上身图 + 产品/套装图 + 花型素材 | 点击图片可放大查看</p></div>
+<div class="cr-intro"><div class="cr-stat"><b>28</b><span>创意视觉素材（张）</span></div><div class="cr-stat"><b>10</b><span>AI 延伸视觉大图</span></div><div class="cr-stat"><b>18</b><span>模特上身 / 产品套装图</span></div><div class="cr-stat"><b>6</b><span>创意分组方向</span></div></div>
+<section class="cr-sec"><div class="cr-sec-head"><h2>AI 延伸视觉主图</h2><span class="cr-badge">AI VISUAL · 10</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="AI 延伸视觉主图 01"><img loading="lazy" decoding="async" src="images/creative/ai-01.jpeg" alt="AI 延伸视觉主图 01"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 01</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 02"><img loading="lazy" decoding="async" src="images/creative/ai-02.jpeg" alt="AI 延伸视觉主图 02"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 02</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 03"><img loading="lazy" decoding="async" src="images/creative/ai-03.jpeg" alt="AI 延伸视觉主图 03"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 03</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 04"><img loading="lazy" decoding="async" src="images/creative/ai-04.jpeg" alt="AI 延伸视觉主图 04"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 04</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 05"><img loading="lazy" decoding="async" src="images/creative/ai-05.jpeg" alt="AI 延伸视觉主图 05"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 05</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 06"><img loading="lazy" decoding="async" src="images/creative/ai-06.jpeg" alt="AI 延伸视觉主图 06"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 06</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 07"><img loading="lazy" decoding="async" src="images/creative/ai-07.jpeg" alt="AI 延伸视觉主图 07"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 07</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 08"><img loading="lazy" decoding="async" src="images/creative/ai-08.jpeg" alt="AI 延伸视觉主图 08"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 08</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 09"><img loading="lazy" decoding="async" src="images/creative/ai-09.jpeg" alt="AI 延伸视觉主图 09"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 09</b><span class="cr-tag">AI 大图</span></figcaption></figure><figure class="cr-card" data-cap="AI 延伸视觉主图 10"><img loading="lazy" decoding="async" src="images/creative/ai-10.jpeg" alt="AI 延伸视觉主图 10"/><figcaption class="cr-cap"><b>AI 延伸视觉主图 10</b><span class="cr-tag">AI 大图</span></figcaption></figure></div></section>
+<section class="cr-sec"><div class="cr-sec-head"><h2>圣诞节日系列</h2><span class="cr-badge">CHRISTMAS · 4</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="圣诞猫咪袋连帽卫衣 · 男模全身"><img loading="lazy" decoding="async" src="images/creative/xmas-01.png" alt="圣诞猫咪袋连帽卫衣 · 男模全身"/><figcaption class="cr-cap"><b>圣诞猫咪袋连帽卫衣 · 男模全身</b><span class="cr-tag">节日</span></figcaption></figure><figure class="cr-card" data-cap="圣诞印花睡衣 · 居家场景"><img loading="lazy" decoding="async" src="images/creative/xmas-02.png" alt="圣诞印花睡衣 · 居家场景"/><figcaption class="cr-cap"><b>圣诞印花睡衣 · 居家场景</b><span class="cr-tag">节日</span></figcaption></figure><figure class="cr-card" data-cap="酒红圣诞老人图案卫衣 · 圣诞背景"><img loading="lazy" decoding="async" src="images/creative/xmas-03.png" alt="酒红圣诞老人图案卫衣 · 圣诞背景"/><figcaption class="cr-cap"><b>酒红圣诞老人图案卫衣 · 圣诞背景</b><span class="cr-tag">节日</span></figcaption></figure><figure class="cr-card" data-cap="红色圣诞老人撞墙背面 T 恤"><img loading="lazy" decoding="async" src="images/creative/xmas-04.png" alt="红色圣诞老人撞墙背面 T 恤"/><figcaption class="cr-cap"><b>红色圣诞老人撞墙背面 T 恤</b><span class="cr-tag">节日</span></figcaption></figure></div></section>
+<section class="cr-sec"><div class="cr-sec-head"><h2>卫衣 / 亨利衫 / 上衣</h2><span class="cr-badge">HOODIE · 4</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="PARKE 麻灰圆领卫衣 · 手持咖啡"><img loading="lazy" decoding="async" src="images/creative/hoodie-01.png" alt="PARKE 麻灰圆领卫衣 · 手持咖啡"/><figcaption class="cr-cap"><b>PARKE 麻灰圆领卫衣 · 手持咖啡</b><span class="cr-tag">卫衣</span></figcaption></figure><figure class="cr-card" data-cap="水彩渐变条纹亨利领华夫格上衣"><img loading="lazy" decoding="async" src="images/creative/hoodie-02.png" alt="水彩渐变条纹亨利领华夫格上衣"/><figcaption class="cr-cap"><b>水彩渐变条纹亨利领华夫格上衣</b><span class="cr-tag">亨利衫</span></figcaption></figure><figure class="cr-card" data-cap="迷彩 Gods Country 长角牛印花卫衣"><img loading="lazy" decoding="async" src="images/creative/hoodie-03.png" alt="迷彩 Gods Country 长角牛印花卫衣"/><figcaption class="cr-cap"><b>迷彩 Gods Country 长角牛印花卫衣</b><span class="cr-tag">卫衣</span></figcaption></figure><figure class="cr-card" data-cap="雄狮 LIONS 蓝色印花连帽卫衣 · 球场"><img loading="lazy" decoding="async" src="images/creative/hoodie-04.png" alt="雄狮 LIONS 蓝色印花连帽卫衣 · 球场"/><figcaption class="cr-cap"><b>雄狮 LIONS 蓝色印花连帽卫衣 · 球场</b><span class="cr-tag">卫衣</span></figcaption></figure></div></section>
+<section class="cr-sec"><div class="cr-sec-head"><h2>T 恤 / 衬衫</h2><span class="cr-badge">TEE & SHIRT · 2</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="藏蓝 NEW ENGLAND 10 号橄榄球 T 恤"><img loading="lazy" decoding="async" src="images/creative/tee-01.png" alt="藏蓝 NEW ENGLAND 10 号橄榄球 T 恤"/><figcaption class="cr-cap"><b>藏蓝 NEW ENGLAND 10 号橄榄球 T 恤</b><span class="cr-tag">T恤</span></figcaption></figure><figure class="cr-card" data-cap="黑金亮片波浪纹短袖翻领衬衫"><img loading="lazy" decoding="async" src="images/creative/shirt-01.png" alt="黑金亮片波浪纹短袖翻领衬衫"/><figcaption class="cr-cap"><b>黑金亮片波浪纹短袖翻领衬衫</b><span class="cr-tag">衬衫</span></figcaption></figure></div></section>
+<section class="cr-sec"><div class="cr-sec-head"><h2>套装 / 产品图</h2><span class="cr-badge">SET & PRODUCT · 4</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="老鹰橄榄球印花 POLO 领长袖上衣"><img loading="lazy" decoding="async" src="images/creative/product-01.png" alt="老鹰橄榄球印花 POLO 领长袖上衣"/><figcaption class="cr-cap"><b>老鹰橄榄球印花 POLO 领长袖上衣</b><span class="cr-tag">产品图</span></figcaption></figure><figure class="cr-card" data-cap="老鹰绿白拼色 POLO + 同系列短裤套装"><img loading="lazy" decoding="async" src="images/creative/product-02.png" alt="老鹰绿白拼色 POLO + 同系列短裤套装"/><figcaption class="cr-cap"><b>老鹰绿白拼色 POLO + 同系列短裤套装</b><span class="cr-tag">套装</span></figcaption></figure><figure class="cr-card" data-cap="黑色压缩短袖 T 恤"><img loading="lazy" decoding="async" src="images/creative/product-03.png" alt="黑色压缩短袖 T 恤"/><figcaption class="cr-cap"><b>黑色压缩短袖 T 恤</b><span class="cr-tag">产品图</span></figcaption></figure><figure class="cr-card" data-cap="黑色压缩背心 + 同系列运动短裤"><img loading="lazy" decoding="async" src="images/creative/product-04.png" alt="黑色压缩背心 + 同系列运动短裤"/><figcaption class="cr-cap"><b>黑色压缩背心 + 同系列运动短裤</b><span class="cr-tag">套装</span></figcaption></figure></div></section>
+<section class="cr-sec"><div class="cr-sec-head"><h2>图案 / 花型素材</h2><span class="cr-badge">PATTERN · 4</span><span class="cr-line"></span></div><div class="cr-grid"><figure class="cr-card" data-cap="AI 生成花型图案 01"><img loading="lazy" decoding="async" src="images/creative/pattern-01.png" alt="AI 生成花型图案 01"/><figcaption class="cr-cap"><b>AI 生成花型图案 01</b><span class="cr-tag">图案</span></figcaption></figure><figure class="cr-card" data-cap="AI 生成花型图案 02"><img loading="lazy" decoding="async" src="images/creative/pattern-02.png" alt="AI 生成花型图案 02"/><figcaption class="cr-cap"><b>AI 生成花型图案 02</b><span class="cr-tag">图案</span></figcaption></figure><figure class="cr-card" data-cap="NORWAY 挪威国旗 · 透明底图案"><img loading="lazy" decoding="async" src="images/creative/pattern-03.png" alt="NORWAY 挪威国旗 · 透明底图案"/><figcaption class="cr-cap"><b>NORWAY 挪威国旗 · 透明底图案</b><span class="cr-tag">图案</span></figcaption></figure><figure class="cr-card" data-cap="PARIS 三色条纹 · 透明底 LOGO"><img loading="lazy" decoding="async" src="images/creative/pattern-04.png" alt="PARIS 三色条纹 · 透明底 LOGO"/><figcaption class="cr-cap"><b>PARIS 三色条纹 · 透明底 LOGO</b><span class="cr-tag">LOGO</span></figcaption></figure></div></section>
+<div class="cr-lightbox" id="crLightbox"><img id="crLbImg" alt=""/><div class="cr-lb-cap" id="crLbCap"></div></div>
+</div>
 <div class="tab-content" id="tab-top">
 <div class="trend-hero">
 <div class="hero-glow hero-glow-a"></div><div class="hero-glow hero-glow-b"></div>
@@ -2874,6 +2886,32 @@ function exportCat(){
 #globalBackTop:hover{background:#d9ff3f;color:#080a0d;border-color:#d9ff3f}
 #globalBackTop:focus-visible{outline:2px solid #8fe8ff;outline-offset:2px}
 @media(max-width:900px){#globalBackTop{right:14px;bottom:14px;width:44px;height:44px}}
+
+/* ===== 爆款二次创意参考 TAB ===== */
+.cr-intro{display:flex;gap:16px;flex-wrap:wrap;margin:20px 0 4px}
+.cr-stat{flex:1;min-width:170px;background:var(--card);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.6)}
+.cr-stat b{display:block;font-size:23px;line-height:1.2;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cr-stat span{font-size:12.5px;color:var(--sub)}
+.cr-sec{margin-top:28px}
+.cr-sec-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.cr-sec-head h2{font-size:18px;color:var(--text);font-weight:700}
+.cr-badge{font-size:11.5px;font-weight:700;color:var(--pri);background:var(--pri-l);padding:4px 10px;border-radius:20px}
+.cr-line{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);min-width:40px}
+.cr-grid{column-count:4;column-gap:16px}
+@media(max-width:1400px){.cr-grid{column-count:3}}
+@media(max-width:960px){.cr-grid{column-count:2}}
+@media(max-width:560px){.cr-grid{column-count:1}}
+.cr-card{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 16px;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in;transition:transform .25s ease,box-shadow .25s ease}
+.cr-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.cr-card img{display:block;width:100%;height:auto;background:#f4f6fb}
+.cr-cap{padding:10px 12px 12px;font-size:12.5px;color:var(--sub);line-height:1.55;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.cr-cap b{color:var(--text);font-weight:600;font-size:12.5px}
+.cr-tag{font-size:10.5px;font-weight:700;color:var(--pri);background:var(--pri-l);padding:2px 8px;border-radius:20px;white-space:nowrap;flex:0 0 auto}
+.cr-lightbox{position:fixed;inset:0;background:rgba(18,20,28,.9);display:none;align-items:center;justify-content:center;z-index:99999;padding:34px;cursor:zoom-out}
+.cr-lightbox.on{display:flex}
+.cr-lightbox img{max-width:92vw;max-height:86vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+.cr-lb-cap{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#e8ebf5;font-size:13px;padding:0 24px}
+
 </style>
 
 
@@ -2920,5 +2958,38 @@ function exportCat(){
 })();
 </script>
 
+
+<script id="v9-creative">
+(function(){
+  function ready(fn){ if(document.readyState!=='loading'){fn()}else{document.addEventListener('DOMContentLoaded',fn)} }
+  ready(function(){
+    var lb=document.getElementById('crLightbox');
+    var lbImg=document.getElementById('crLbImg');
+    var lbCap=document.getElementById('crLbCap');
+    if(!lb||!lbImg) return;
+    function close(){
+      lb.classList.remove('on');
+      document.body.style.overflow='';
+    }
+    document.addEventListener('click',function(e){
+      var card=e.target.closest?e.target.closest('.cr-card'):null;
+      if(card){
+        var im=card.querySelector('img');
+        if(im){
+          lbImg.setAttribute('src',im.getAttribute('src'));
+          lbCap.textContent=card.getAttribute('data-cap')||'';
+          lb.classList.add('on');
+          document.body.style.overflow='hidden';
+        }
+        return;
+      }
+      if(lb.classList.contains('on')){ close(); }
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&lb.classList.contains('on')){ close(); }
+    });
+  });
+})();
+</script>
 </body>
 </html>

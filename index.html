@@ -207,6 +207,7 @@ tr:hover{background:var(--pri-l)}
 .calendar-tooltip .tt-link{color:var(--pri);font-weight:700;margin-top:10px;display:inline-block;font-size:13px}
 /* 直播列表视图 */
 .live-list{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.live-list .table-wrapper:first-child{border-radius:var(--radius) var(--radius) 0 0}
 .live-list .live-header{padding:24px 30px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
 .live-list .live-header h2{font-size:22px;color:var(--text)}
 .live-tag{display:inline-block;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;background:#fff1f0;color:#cf1322;border:1px solid #ffa39e}
@@ -314,11 +315,15 @@ body{padding:0!important;margin:0;background:#070b17!important;color:var(--ref-t
 .reference-sidebar .side-anchor{min-height:48px;padding-left:28px;font-size:14px;font-weight:600}.side-anchor span{width:28px;color:#8d91a3}.side-anchor b{margin-left:auto;color:#70758a;font-size:10px}
 .sidebar-share{position:sticky;bottom:0;width:calc(100% - 28px);margin:10px 14px 16px;height:44px;border:1px solid rgba(255,255,255,.09);border-radius:9px;background:#171b2d;color:#cdd0dd;cursor:pointer}
 .reference-main{width:100%;min-height:100vh}.portal-warning{position:fixed;z-index:300;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#d52f55,#be2949);color:#fff;font-size:14px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.28)}
-.trend-hero{min-height:425px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 20% 30%,rgba(24,70,130,.8),transparent 36%),radial-gradient(circle at 88% 65%,rgba(225,45,85,.85),transparent 45%),linear-gradient(115deg,#112544 0%,#120f20 46%,#711c3a 100%);border-bottom:1px solid rgba(255,255,255,.08)}
+.trend-hero{min-height:290px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 20% 30%,rgba(24,70,130,.8),transparent 36%),radial-gradient(circle at 88% 65%,rgba(225,45,85,.85),transparent 45%),linear-gradient(115deg,#112544 0%,#120f20 46%,#711c3a 100%);border-bottom:1px solid rgba(255,255,255,.08)}
 .trend-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(4,7,15,.45))}
-.hero-copy{position:relative;z-index:2;padding:80px 30px 60px}.hero-kicker{font-size:13px;letter-spacing:3px;color:#d6d8e2;margin-bottom:18px}
-.hero-copy h1{margin:0;font-size:58px;line-height:1.1;font-weight:900;letter-spacing:-2px;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.25)}.hero-copy h1 span{background:linear-gradient(90deg,#fff,#ffb4c1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-copy p{margin:22px 0 20px;color:#aeb1c0;font-size:17px;letter-spacing:1px}.hero-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.hero-tags span{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:999px;padding:7px 14px;color:#e8e9f0;font-size:12px}
+.hero-sticker{position:absolute;top:20px;right:22px;z-index:5;transform:rotate(6deg);display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 16px 8px;background:linear-gradient(135deg,#ffe14d,#ffc400);color:#20170a;border:2px solid #20170a;box-shadow:4px 4px 0 rgba(0,0,0,.35);font-size:14px;font-weight:900;letter-spacing:1px;line-height:1.15;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.hero-sticker span{font:800 8.5px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.22em;opacity:.7}
+.trend-hero:hover .hero-sticker{transform:rotate(0) scale(1.04)}
+@media(max-width:700px){.hero-sticker{top:12px;right:12px;padding:7px 12px;font-size:12px}}
+.hero-copy{position:relative;z-index:2;padding:46px 30px 42px}.hero-kicker{font-size:13px;letter-spacing:3px;color:#d6d8e2;margin-bottom:18px}
+.hero-copy h1{margin:0;font-size:50px;line-height:1.1;font-weight:900;letter-spacing:-2px;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.25)}.hero-copy h1 span{background:linear-gradient(90deg,#fff,#ffb4c1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p{margin:0 0 0;color:#aeb1c0;font-size:17px;letter-spacing:1px}.hero-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}.hero-tags span{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:999px;padding:7px 14px;color:#e8e9f0;font-size:12px}
 .hero-glow{position:absolute;border-radius:50%;filter:blur(30px);opacity:.28}.hero-glow-a{width:300px;height:300px;left:-80px;bottom:-150px;background:#5e92ff}.hero-glow-b{width:260px;height:260px;right:-60px;top:-130px;background:#ff4772}
 .trend-toolbar{display:flex;align-items:end;justify-content:space-between;gap:20px;padding:34px 36px 22px;background:#080c18}.section-eyebrow{font-size:11px;letter-spacing:2px;color:#e85c7b;font-weight:800}.trend-toolbar h2{font-size:30px;margin:7px 0 5px}.trend-toolbar p{font-size:13px;color:#7f8497}.trend-actions{display:flex;gap:8px;flex-wrap:wrap}.trend-actions button{border:1px solid #292e45;background:#11162a;color:#cdd0dc;border-radius:7px;padding:10px 14px;cursor:pointer}.trend-actions button:hover{border-color:#e84b6d;color:#fff}
 .top-board{margin:0 36px 24px;border:1px solid rgba(255,255,255,.075);border-radius:14px;background:linear-gradient(180deg,#0e1324,#0a0e1b);overflow:hidden}.board-title{display:flex;align-items:center;gap:14px;padding:19px 20px;border-bottom:1px solid rgba(255,255,255,.07)}.rank-badge{width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(135deg,#e63b61,#ff7185);color:#fff;font-size:13px;font-weight:900}.board-title h3{font-size:19px;margin:0 0 4px}.board-title p{font-size:12px;color:#777d91}.board-more{margin-left:auto;color:#e95c79;font-size:12px}
@@ -619,7 +624,8 @@ input,select{background:#0d0f13!important;color:#f2f3f5!important;border-color:#
 </style>
 <style id="v5-layout-visual-fixes">
 /* V5: single coordinate system — sidebar and content share the same viewport origin */
-html,body{margin:0!important;padding:0!important;overflow-x:hidden!important}
+html{margin:0!important;padding:0!important;overflow-x:hidden!important}
+body{margin:0!important;padding:0!important;overflow-x:clip!important}
 .container{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-sizing:border-box!important}
 .reference-sidebar{left:0!important;top:44px!important;bottom:0!important;width:260px!important;box-sizing:border-box!important}
 .reference-main{margin-left:260px!important;width:calc(100vw - 260px)!important;max-width:none!important;padding:44px 0 0!important;box-sizing:border-box!important}
@@ -985,7 +991,15 @@ div.ops-region,
 </style>
 
 <style id="hot-ref-styles">
-.hot-cat-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.hot-cat-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;position:sticky;top:44px;z-index:40;padding:10px 0;background:#101217;box-shadow:0 0 0 8px #101217,0 1px 0 8px #23262e;border-bottom:1px solid #23262e}
+#top-acc-hot{overflow:visible!important;overflow-clip-margin:0}
+#top-acc-hot[open]{overflow:visible!important}
+.hot-cat-nav.hot-nav-pinned{position:fixed!important;z-index:120;margin:0!important;
+  padding:10px 18px!important;background:#0d1015!important;border-bottom:1px solid #23262e;
+  box-shadow:0 10px 24px -14px rgba(0,0,0,.9)!important;align-content:flex-start}
+.hot-cat-nav-ph{background:transparent}
+[id^="hot-cat-"]{scroll-margin-top:104px}
+@media(max-width:900px){.hot-cat-nav{top:44px;background:#101217;box-shadow:0 0 0 8px #101217,0 1px 0 8px #23262e}}
 .hot-cat-chip{display:inline-block;padding:6px 12px;border:1px solid #343a45;background:#171b22;color:#dfe4ec;font-size:12px;font-weight:700;text-decoration:none}
 .hot-cat-chip:hover{border-color:#d9ff3f;color:#d9ff3f}
 
@@ -1080,11 +1094,10 @@ div.ops-region,
 <div class="tab-content" id="tab-top">
 <div class="trend-hero">
 <div class="hero-glow hero-glow-a"></div><div class="hero-glow hero-glow-b"></div>
+<div class="hero-sticker">周度更新<span>WEEKLY</span></div>
 <div class="hero-copy">
-<div class="hero-kicker">2026 · OCTOBER / PRINTED APPAREL</div>
 <h1>印花服饰<span>热门趋势方向</span></h1>
-<p>TOP 商品趋势全景展示 · 从热搜关键词到款式、印花元素与传品类目</p>
-<div class="hero-tags"><span>TOP200</span><span>欧美市场</span><span>印花趋势</span><span>趋势参考</span></div>
+<div class="hero-tags"><span>热门商品趋势</span><span>印花元素</span><span>全景展示</span></div>
 </div>
 </div>
 <section class="top-index">
@@ -1806,10 +1819,10 @@ div.ops-region,
 </div>
 <!-- TAB 5: Resource -->
 <div class="tab-content" id="tab-resource">
-<div class="page-header"><h1>📚 品类资料专区</h1><p>学习资料与线下招商培训会/线上直播日历 | 持续更新中</p></div>
+<div class="page-header"><h1>📚 品类资料专区</h1><p>学习资料与线下招商培训会 / 线上宣讲 | 持续更新中</p></div>
 <div class="sub-tab-nav">
 <button class="sub-tab-btn active" onclick="switchSubTab('study',this)">📖 学习资料</button>
-<button class="sub-tab-btn" onclick="switchSubTab('live',this)">🎬 线下招商培训会/线上直播日历</button>
+<button class="sub-tab-btn" onclick="switchSubTab('live',this)">🎬 线下招商培训会 / 线上宣讲</button>
 </div>
 <!-- 学习资料 -->
 <div class="sub-tab-content active" id="subtab-study">
@@ -1820,7 +1833,7 @@ div.ops-region,
 <div class="stats-bar">共 <span id="studyTotalCount">0</span> 条资料</div>
 <div class="table-wrapper"><table class="resource-table"><thead><tr><th>序号</th><th>品类</th><th>内容</th><th>操作</th></tr></thead><tbody id="studyTableBody"></tbody></table></div>
 </div>
-<!-- 直播日历 -->
+<!-- 线下招商培训会 -->
 <div class="sub-tab-content" id="subtab-live">
 <div class="filters">
 <div class="view-toggle">
@@ -1852,7 +1865,6 @@ div.ops-region,
 <!-- 列表视图 -->
 <div id="liveListView" style="display:none">
 <div class="live-list">
-<div class="live-header"><h2>🎬 直播日程</h2><span class="live-tag">LIVE</span></div>
 <div class="table-wrapper" style="border-radius:0;box-shadow:none"><table class="resource-table"><thead><tr><th>开播时间</th><th>宣讲内容</th><th>宣讲人</th><th>预约链接</th></tr></thead><tbody id="liveTableBody"></tbody></table></div>
 </div>
 </div>
@@ -1903,6 +1915,15 @@ div.ops-region,
   color:#c3c8d2;font-size:14px;cursor:pointer;text-decoration:none;transition:all .22s}
 #tab-aitools .ai-tool:hover{border-color:#c7f000;color:#c7f000;background:#171a22}
 #tab-aitools .ai-tool[disabled]{opacity:.35;pointer-events:none}
+#tab-aitools .ai-open{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 15px;
+  border:1px solid #c7f000;background:rgba(199,240,0,.14);color:#c7f000;text-decoration:none;
+  font-size:12.5px;font-weight:800;letter-spacing:.02em;transition:all .24s;flex:0 0 auto}
+#tab-aitools .ai-open b{font-weight:800}
+#tab-aitools .ai-open .ai-open-i{font-size:14px;line-height:1;transition:transform .24s}
+#tab-aitools .ai-open:hover{background:#c7f000;color:#0b0d10;box-shadow:0 6px 18px -8px #c7f000}
+#tab-aitools .ai-open:hover .ai-open-i{transform:translate(2px,-2px)}
+#tab-aitools .ai-open[disabled]{opacity:.3;pointer-events:none;filter:grayscale(1)}
+@media(max-width:620px){#tab-aitools .ai-open{padding:0 11px}#tab-aitools .ai-open b{font-size:11.5px}}
 
 /* 总览卡片 */
 #tab-aitools .ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;padding:26px 32px 10px}
@@ -1917,7 +1938,14 @@ div.ops-region,
   background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 1px,transparent 1px 9px)}
 #tab-aitools .ai-cover .ai-big{position:absolute;right:10px;top:-14px;font:900 96px/1 ui-monospace,Menlo,Consolas,monospace;
   color:rgba(255,255,255,.07);letter-spacing:-6px;transition:color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
-#tab-aitools .ai-card:hover .ai-big{color:rgba(199,240,0,.16);transform:translate3d(-4px,4px,0)}
+#tab-aitools .ai-card:hover .ai-big,#tab-aitools .ai-card:focus-visible .ai-big{color:rgba(199,240,0,.62);transform:translate3d(-4px,4px,0)}
+#tab-aitools .ai-cut{position:absolute;right:8px;bottom:-6px;height:calc(100% + 12px);width:auto;max-width:60%;
+  object-fit:contain;object-position:bottom right;opacity:0;transform:translate3d(14px,18px,0) scale(.92);
+  transform-origin:bottom right;pointer-events:none;z-index:2;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));
+  transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+#tab-aitools .ai-card:hover .ai-cut,#tab-aitools .ai-card:focus-visible .ai-cut{opacity:1;transform:translate3d(0,0,0) scale(1)}
+#tab-aitools .ai-cover .ai-tag{z-index:3}
 #tab-aitools .ai-tag{position:relative;z-index:2;display:inline-block;padding:5px 11px;border:1px solid rgba(199,240,0,.45);
   background:rgba(199,240,0,.1);color:#c7f000;font-size:11px;font-weight:800;letter-spacing:.1em}
 #tab-aitools .ai-card-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
@@ -1940,6 +1968,9 @@ div.ops-region,
   background:#0b0c11;color:#9aa0ad;font-size:13px;letter-spacing:.06em;z-index:3;transition:opacity .3s}
 #tab-aitools .ai-loading.hide{opacity:0;pointer-events:none}
 #tab-aitools .ai-spin{width:20px;height:20px;border:2px solid #2f333e;border-top-color:#c7f000;border-radius:50%;animation:aiSpin .8s linear infinite}
+#tab-aitools .ai-pct{font:800 13px/1 ui-monospace,Menlo,Consolas,monospace;color:#c7f000;min-width:42px;text-align:right}
+#tab-aitools .ai-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:#1a1d24}
+#tab-aitools .ai-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8ff0c4,#c7f000);transition:width .35s ease}
 @keyframes aiSpin{to{transform:rotate(360deg)}}
 #tab-aitools .ai-vfoot{padding:10px 2px 0;font-size:11.5px;color:#6f7583;letter-spacing:.03em}
 #tab-aitools [hidden]{display:none!important}
@@ -1979,13 +2010,13 @@ div.ops-region,
   </div>
   <div class="ai-tools">
     <button class="ai-tool" id="aiReloadBtn" type="button" title="重新载入当前手册" aria-label="重新载入">↻</button>
-    <a class="ai-tool" id="aiOpenBtn" href="#" target="_blank" rel="noopener" title="在新窗口打开当前手册" aria-label="新窗口打开">↗</a>
+    <a class="ai-open" id="aiOpenBtn" href="#" target="_blank" rel="noopener" title="在新窗口打开当前手册"><span class="ai-open-i">↗</span><b>在新窗口打开</b></a>
   </div>
 </div>
 
 <div class="ai-grid" id="aiGrid">
   <button class="ai-card" type="button" data-ai="mens">
-    <div class="ai-cover"><span class="ai-big">01</span><span class="ai-tag">男装 · 出图方法论</span></div>
+    <div class="ai-cover"><img class="ai-cut" src="ai-tools/thumb-mens.png" alt="" aria-hidden="true" loading="lazy"/><span class="ai-big">01</span><span class="ai-tag">男装 · 出图方法论</span></div>
     <div class="ai-card-body">
       <h3>男装 · AI 出图，从第一张开始</h3>
       <p>人模与区域（族裔 × 区域占比怎么选）、场景与品类（场景适配、常用背景与姿势）、产出主图（关键项怎么定）。</p>
@@ -1994,7 +2025,7 @@ div.ops-region,
   </button>
 
   <button class="ai-card" type="button" data-ai="plus">
-    <div class="ai-cover"><span class="ai-big">02</span><span class="ai-tag">大码男装 · 样本册</span></div>
+    <div class="ai-cover"><img class="ai-cut" src="ai-tools/thumb-plus.png" alt="" aria-hidden="true" loading="lazy"/><span class="ai-big">02</span><span class="ai-tag">大码男装 · 样本册</span></div>
     <div class="ai-card-body">
       <h3>大码男装 · 视觉样本册 第二辑</h3>
       <p>13 个品类款式的正侧面与静物参考：T恤、背心、短裤、风衣大衣、毛衣针织、棉服、牛仔裤、套装、外套夹克、卫衣连帽、长裤、正装、衬衫，并附视觉延展方向。</p>
@@ -2003,7 +2034,7 @@ div.ops-region,
   </button>
 
   <button class="ai-card" type="button" data-ai="boys">
-    <div class="ai-cover"><span class="ai-big">03</span><span class="ai-tag">童装 · 区域样本册</span></div>
+    <div class="ai-cover"><img class="ai-cut" src="ai-tools/thumb-boys.png" alt="" aria-hidden="true" loading="lazy"/><span class="ai-big">03</span><span class="ai-tag">童装 · 区域样本册</span></div>
     <div class="ai-card-body">
       <h3>男童 / 男婴 · 区域视觉样本册</h3>
       <p>五区域 × 裔群 × 年龄段交叉的视觉参考，交互式切换与逐图放大，用于判断不同市场的面孔、体型与穿搭基调。</p>
@@ -2012,7 +2043,7 @@ div.ops-region,
   </button>
 
   <button class="ai-card" type="button" data-ai="girls">
-    <div class="ai-cover"><span class="ai-big">04</span><span class="ai-tag">童装 · 区域样本册</span></div>
+    <div class="ai-cover"><img class="ai-cut" src="ai-tools/thumb-girls.png" alt="" aria-hidden="true" loading="lazy"/><span class="ai-big">04</span><span class="ai-tag">童装 · 区域样本册</span></div>
     <div class="ai-card-body">
       <h3>女童 / 女婴 · 区域视觉样本册</h3>
       <p>五区域 × 裔群 × 年龄段交叉的视觉参考，交互式切换与逐图放大，覆盖婴儿到少女线的风格区间。</p>
@@ -2021,7 +2052,7 @@ div.ops-region,
   </button>
 
   <button class="ai-card" type="button" data-ai="inner">
-    <div class="ai-cover"><span class="ai-big">05</span><span class="ai-tag">内衣 · 提示词手册</span></div>
+    <div class="ai-cover"><img class="ai-cut" src="ai-tools/thumb-inner.png" alt="" aria-hidden="true" loading="lazy"/><span class="ai-big">05</span><span class="ai-tag">内衣 · 提示词手册</span></div>
     <div class="ai-card-body">
       <h3>男内 / 童内 · 主图提示词手册</h3>
       <p>按品类与卖点整理的主图提示词条目与出图规格，示例图逐条对应，可直接挑选复用。</p>
@@ -2039,7 +2070,7 @@ div.ops-region,
     <div class="ai-vmeta" id="aiVmeta"></div>
   </div>
   <div class="ai-frame-box">
-    <div class="ai-loading" id="aiLoading"><span class="ai-spin"></span>正在载入手册…</div>
+    <div class="ai-loading" id="aiLoading"><span class="ai-spin"></span><span class="ai-load-txt" id="aiLoadTxt">正在载入手册…</span><span class="ai-pct" id="aiPct">0%</span><div class="ai-prog"><i id="aiProgBar"></i></div></div>
     <iframe id="aiFrame" class="ai-frame" title="AI 生图手册" loading="lazy" referrerpolicy="no-referrer"></iframe>
   </div>
   <div class="ai-vfoot" id="aiVfoot">手册为独立页面，内部自带导航；如需全屏阅读请点右上角 ↗。</div>
@@ -2074,6 +2105,43 @@ div.ops-region,
   var vfoot = document.getElementById('aiVfoot');
   var openBtn = document.getElementById('aiOpenBtn');
   var reloadBtn = document.getElementById('aiReloadBtn');
+  var loadTxt = document.getElementById('aiLoadTxt');
+  var pctEl = document.getElementById('aiPct');
+  var progBar = document.getElementById('aiProgBar');
+  var progTimer = null, progVal = 0, progDone = true;
+
+  function setProg(v){
+    progVal = Math.min(93, v);
+    if(pctEl) pctEl.textContent = Math.round(progVal) + '%';
+    if(progBar) progBar.style.width = progVal + '%';
+  }
+  function stopProgress(){
+    if(progTimer){ clearInterval(progTimer); progTimer = null; }
+  }
+  function startProgress(){
+    stopProgress();
+    progDone = false;
+    progVal = 0;
+    if(pctEl) pctEl.textContent = '0%';
+    if(progBar) progBar.style.width = '0%';
+    if(loadTxt) loadTxt.textContent = '正在载入手册…';
+    loading.classList.remove('hide');
+    var t0 = Date.now();
+    progTimer = setInterval(function(){
+      if(progDone) return;
+      var el = (Date.now() - t0) / 1000;
+      var target = 93 * (1 - Math.exp(-el / 3.2));
+      if(target > progVal) setProg(progVal + (target - progVal) * 0.3);
+      if(el > 12 && loadTxt) loadTxt.textContent = '手册较大（含内嵌图片），仍在解析…';
+    }, 110);
+  }
+  function finishProgress(){
+    progDone = true;
+    stopProgress();
+    if(pctEl) pctEl.textContent = '100%';
+    if(progBar) progBar.style.width = '100%';
+    setTimeout(function(){ loading.classList.add('hide'); }, 240);
+  }
   if(!nav || !viewer || !frame) return;
 
   function markChips(id){
@@ -2109,14 +2177,15 @@ div.ops-region,
     openBtn.removeAttribute('disabled');
     openBtn.setAttribute('href', doc.src);
     reloadBtn.removeAttribute('disabled');
-    vfoot.textContent = '手册为独立页面，内部自带导航；如需全屏阅读请点右上角 ↗。文件位置：' + doc.src;
+    vfoot.textContent = '手册为独立页面，内部自带导航；如需全屏阅读请点右上角「在新窗口打开」。';
 
     if(!loaded[id] || (opts && opts.reload)){
       loaded[id] = 1;
-      loading.classList.remove('hide');
-      loading.innerHTML = '<span class="ai-spin"></span>正在载入手册…';
+      startProgress();
       frame.src = doc.src;
     } else {
+      progDone = true;
+      stopProgress();
       loading.classList.add('hide');
     }
     try{ viewer.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){}
@@ -2125,13 +2194,20 @@ div.ops-region,
 
   frame.addEventListener('load', function(){
     if(!frame.getAttribute('src')) return;
-    loading.classList.add('hide');
+    finishProgress();
   });
-  setTimeout(function(){
-    if(current !== 'overview' && !loading.classList.contains('hide') && frame.getAttribute('src')){
-      loading.innerHTML = '<span class="ai-spin"></span>手册较大（含内嵌图片），仍在载入…';
+
+  /* 同源文档：解析完成即视为 100%，避免仅依赖 load 事件 */
+  setInterval(function(){
+    if(progDone || current === 'overview') return;
+    var doc = null;
+    try{ doc = frame.contentDocument; }catch(e){ return; }
+    if(!doc) return;
+    if(doc.readyState === 'complete' && doc.body && doc.body.children.length > 0){
+      if(loadTxt) loadTxt.textContent = '正在渲染图片…';
+      finishProgress();
     }
-  }, 6000);
+  }, 350);
 
   nav.addEventListener('click', function(e){
     var chip = e.target.closest ? e.target.closest('.ai-chip') : null;
@@ -4370,5 +4446,70 @@ img.v30-img-loaded{opacity:1;transition:opacity .55s ease}
 })();
 </script>
 
+
+<script id="hot-nav-sticky-fix">
+/* 创意参考分类条：CSS sticky 兜底（若祖先溢出导致失效，自动接管为固定定位） */
+(function(){
+  var nav=document.querySelector('#top-acc-hot .hot-cat-nav');
+  if(!nav) return;
+  var det=nav.closest('details');
+  function topOffset(){
+    var el=document.querySelector('.portal-warning');
+    if(!el) return 0;
+    var r=el.getBoundingClientRect();
+    return (r.height>4 && r.bottom>0) ? Math.round(r.bottom) : 0;
+  }
+  var ph=document.createElement('div');
+  ph.className='hot-cat-nav-ph';
+  ph.style.display='none';
+  var fixed=false, navH=0, ticking=false;
+
+  function pin(){
+    if(fixed) return;
+    var r=nav.getBoundingClientRect();
+    if(r.width < 60) return;
+    navH=r.height;
+    ph.style.height=navH+'px';
+    ph.style.display='block';
+    nav.parentNode.insertBefore(ph,nav);
+    nav.classList.add('hot-nav-pinned');
+    nav.style.top=topOffset()+'px';
+    nav.style.left=r.left+'px';
+    nav.style.width=r.width+'px';
+    fixed=true;
+  }
+  function unpin(){
+    if(!fixed) return;
+    nav.classList.remove('hot-nav-pinned');
+    nav.style.left='';nav.style.width='';nav.style.top='';
+    if(ph.parentNode) ph.parentNode.removeChild(ph);
+    ph.style.display='none';
+    fixed=false;
+  }
+  function check(){
+    ticking=false;
+    if(!nav.offsetParent || (det && !det.open)){ unpin(); return; }
+    if(fixed){
+      var p=ph.getBoundingClientRect();
+      var keep=p.top<0 && p.bottom>0;
+      if(!keep) unpin();
+      return;
+    }
+    var r=nav.getBoundingClientRect();
+    var wrapR=nav.parentElement.getBoundingClientRect();
+    var shouldStick = wrapR.top < -1 && (wrapR.bottom - navH) > 20;
+    if(shouldStick && r.top < -1) pin();
+  }
+  function onScroll(){
+    if(ticking) return;
+    ticking=true;
+    (window.requestAnimationFrame||function(f){setTimeout(f,16)})(check);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',function(){ unpin(); check(); });
+  if(det) det.addEventListener('toggle',function(){ if(!det.open) unpin(); else setTimeout(check,60); });
+  setTimeout(check,400);
+})();
+</script>
 </body>
 </html>

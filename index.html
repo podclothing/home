@@ -1071,6 +1071,7 @@ div.ops-region,
 <button class="tab-btn" onclick="switchTab('category',this)"><span class="nav-no">04</span><span class="nav-label">传品类目</span><span class="nav-arrow">▶</span></button>
 <button class="tab-btn" onclick="switchTab('resource',this)"><span class="nav-no">05</span><span class="nav-label">品类资料中心</span><span class="nav-arrow">▶</span></button>
 <button class="tab-btn active" onclick="switchTab('contact',this)"><span class="nav-no">06</span><span class="nav-label">运营联系方式</span><span class="nav-arrow">▶</span></button>
+<button class="tab-btn" id="aiToolsTabBtn" data-tab="aitools" onclick="switchTab('aitools',this)"><span class="nav-no">07</span><span class="nav-label">AI 生图工具</span><span class="nav-arrow">▶</span></button>
 </div>
 <button class="sidebar-share" onclick="copyShareUrl()">↗ 复制当前视图链接</button>
 </div>
@@ -1857,6 +1858,365 @@ div.ops-region,
 </div>
 </div>
 </div>
+
+<style id="ai-tools-style">
+/* ============ AI 生图工具 · 手册中心 ============ */
+#tab-aitools{padding:0 0 80px!important}
+#tab-aitools .ai-hero{position:relative;overflow:hidden;padding:52px 44px 40px;
+  background:radial-gradient(circle at 84% 8%,rgba(199,240,0,.14),transparent 44%),
+             radial-gradient(circle at 8% 96%,rgba(85,214,255,.13),transparent 42%),
+             linear-gradient(116deg,#0e1017 0%,#1a1226 58%,#33142f 100%);
+  border-bottom:1px solid #2a2c35}
+#tab-aitools .ai-hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:52px 52px;mask-image:radial-gradient(circle at 70% 30%,#000 10%,transparent 72%);
+  -webkit-mask-image:radial-gradient(circle at 70% 30%,#000 10%,transparent 72%)}
+#tab-aitools .ai-hero>*{position:relative;z-index:2}
+#tab-aitools .ai-kicker{font:700 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.34em;color:#c7f000;margin-bottom:18px}
+#tab-aitools .ai-hero h1{margin:0;font-size:44px;line-height:1.06;font-weight:900;letter-spacing:-2px;color:#fff}
+#tab-aitools .ai-hero h1 span{display:block;font-size:44px;font-weight:900;letter-spacing:-2px;
+  background:linear-gradient(96deg,#c7f000,#8ff0c4 46%,#55d6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+#tab-aitools .ai-hero p{margin:16px 0 0;max-width:760px;font-size:15px;line-height:1.85;color:#b9bdc9}
+#tab-aitools .ai-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+#tab-aitools .ai-stat{display:flex;align-items:baseline;gap:8px;padding:10px 16px;border:1px solid #333845;background:rgba(255,255,255,.03)}
+#tab-aitools .ai-stat b{font-size:22px;font-weight:900;color:#c7f000;letter-spacing:-.5px;line-height:1}
+#tab-aitools .ai-stat span{font-size:11.5px;letter-spacing:.12em;color:#8f95a2;text-transform:uppercase}
+
+/* 横向导航 */
+#tab-aitools .ai-bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:12px;
+  padding:10px 14px;background:rgba(8,9,13,.92);border-bottom:1px solid #262932;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#tab-aitools .ai-nav{display:flex;align-items:center;gap:6px;overflow-x:auto;flex:1;padding:2px 0;
+  scrollbar-width:thin;scrollbar-color:#4a4f5c transparent}
+#tab-aitools .ai-nav::-webkit-scrollbar{height:4px}
+#tab-aitools .ai-nav::-webkit-scrollbar-thumb{background:#3b4150}
+#tab-aitools .ai-chip{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;white-space:nowrap;
+  padding:9px 15px;border:1px solid #2f333e;background:#12141b;color:#c3c8d2;cursor:pointer;
+  font-size:12.5px;font-weight:800;letter-spacing:.02em;transition:border-color .22s,color .22s,background .22s,transform .2s}
+#tab-aitools .ai-chip i{font-style:normal;font:700 10.5px/1 ui-monospace,Menlo,Consolas,monospace;color:#6f7684;letter-spacing:.06em;transition:color .22s}
+#tab-aitools .ai-chip:hover{color:#fff;border-color:#4a505e;transform:translateY(-1px)}
+#tab-aitools .ai-chip.active{background:var(--tech-acid,#c7f000);border-color:var(--tech-acid,#c7f000);color:#080a0d}
+#tab-aitools .ai-chip.active i{color:#2f3a00}
+#tab-aitools .ai-chip:focus-visible{outline:2px solid #c7f000;outline-offset:2px}
+#tab-aitools .ai-tools{display:flex;gap:6px;flex:0 0 auto}
+#tab-aitools .ai-tool{width:34px;height:34px;display:grid;place-items:center;border:1px solid #2f333e;background:#12141b;
+  color:#c3c8d2;font-size:14px;cursor:pointer;text-decoration:none;transition:all .22s}
+#tab-aitools .ai-tool:hover{border-color:#c7f000;color:#c7f000;background:#171a22}
+#tab-aitools .ai-tool[disabled]{opacity:.35;pointer-events:none}
+
+/* 总览卡片 */
+#tab-aitools .ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;padding:26px 32px 10px}
+#tab-aitools .ai-card{position:relative;display:flex;flex-direction:column;text-align:left;padding:0;
+  border:1px solid #292d35;background:#101217;color:inherit;cursor:pointer;overflow:hidden;
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .28s,box-shadow .28s}
+#tab-aitools .ai-card:hover{transform:translateY(-4px);border-color:#3f4551;box-shadow:0 28px 60px -34px #000}
+#tab-aitools .ai-card:focus-visible{outline:2px solid #c7f000;outline-offset:2px}
+#tab-aitools .ai-cover{position:relative;height:126px;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:16px 18px;background:linear-gradient(132deg,#1a1d26,#241832 60%,#331733);border-bottom:1px solid #2b2f39;overflow:hidden}
+#tab-aitools .ai-cover::after{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 1px,transparent 1px 9px)}
+#tab-aitools .ai-cover .ai-big{position:absolute;right:10px;top:-14px;font:900 96px/1 ui-monospace,Menlo,Consolas,monospace;
+  color:rgba(255,255,255,.07);letter-spacing:-6px;transition:color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+#tab-aitools .ai-card:hover .ai-big{color:rgba(199,240,0,.16);transform:translate3d(-4px,4px,0)}
+#tab-aitools .ai-tag{position:relative;z-index:2;display:inline-block;padding:5px 11px;border:1px solid rgba(199,240,0,.45);
+  background:rgba(199,240,0,.1);color:#c7f000;font-size:11px;font-weight:800;letter-spacing:.1em}
+#tab-aitools .ai-card-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+#tab-aitools .ai-card-body h3{margin:0;font-size:16.5px;font-weight:900;line-height:1.45;color:#f3f4f7;letter-spacing:-.2px}
+#tab-aitools .ai-card-body p{margin:0;font-size:12.8px;line-height:1.78;color:#9aa0ad;flex:1}
+#tab-aitools .ai-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;
+  padding-top:12px;border-top:1px solid #23262e;font-size:11.5px;color:#7d8391;letter-spacing:.04em}
+#tab-aitools .ai-card-foot .ai-go{color:#c7f000;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:gap .24s}
+#tab-aitools .ai-card:hover .ai-go{gap:11px}
+
+/* 阅读器 */
+#tab-aitools .ai-viewer{padding:18px 22px 0}
+#tab-aitools .ai-vhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+#tab-aitools .ai-vno{font:700 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.2em;color:#c7f000;margin-bottom:7px}
+#tab-aitools .ai-vhead h3{margin:0;font-size:20px;font-weight:900;letter-spacing:-.4px;color:#f3f4f7}
+#tab-aitools .ai-vmeta{font-size:12px;color:#8d93a0;letter-spacing:.04em}
+#tab-aitools .ai-frame-box{position:relative;border:1px solid #2a2d35;background:#0b0c11;height:calc(100vh - 232px);min-height:620px;overflow:hidden}
+#tab-aitools .ai-frame{display:block;width:100%;height:100%;border:0;background:#fff}
+#tab-aitools .ai-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;
+  background:#0b0c11;color:#9aa0ad;font-size:13px;letter-spacing:.06em;z-index:3;transition:opacity .3s}
+#tab-aitools .ai-loading.hide{opacity:0;pointer-events:none}
+#tab-aitools .ai-spin{width:20px;height:20px;border:2px solid #2f333e;border-top-color:#c7f000;border-radius:50%;animation:aiSpin .8s linear infinite}
+@keyframes aiSpin{to{transform:rotate(360deg)}}
+#tab-aitools .ai-vfoot{padding:10px 2px 0;font-size:11.5px;color:#6f7583;letter-spacing:.03em}
+#tab-aitools [hidden]{display:none!important}
+
+@media (max-width:900px){
+  #tab-aitools .ai-hero{padding:34px 20px 28px}
+  #tab-aitools .ai-hero h1,#tab-aitools .ai-hero h1 span{font-size:30px;letter-spacing:-1px}
+  #tab-aitools .ai-grid{padding:18px 14px 6px;grid-template-columns:1fr}
+  #tab-aitools .ai-viewer{padding:14px 12px 0}
+  #tab-aitools .ai-frame-box{height:calc(100vh - 260px);min-height:520px}
+  #tab-aitools .ai-bar{padding:8px 10px;position:static}
+}
+</style>
+
+<!-- TAB AI: AI 生图工具 -->
+<div class="tab-content" id="tab-aitools">
+<div class="ai-hero">
+  <div class="ai-kicker">AI VISUAL PLAYBOOK / 5 VOLUMES</div>
+  <h1>AI 生图工具<span>指导手册库</span></h1>
+  <p>按品类线整理的出图方法论与视觉样本：从人模与区域、场景与姿势、提示词与主图规格，到区域×裔群×年龄段的视觉参考。选定手册后在此页内直接阅读，亦可全屏打开。</p>
+  <div class="ai-stats">
+    <div class="ai-stat"><b>5</b><span>手册</span></div>
+    <div class="ai-stat"><b>3,281</b><span>参考图</span></div>
+    <div class="ai-stat"><b>8</b><span>品类线</span></div>
+    <div class="ai-stat"><b>2026·11</b><span>版本</span></div>
+  </div>
+</div>
+
+<div class="ai-bar">
+  <div class="ai-nav" id="aiNav" role="tablist" aria-label="AI 生图手册切换">
+    <button class="ai-chip active" data-ai="overview" role="tab" aria-selected="true"><i>✦</i><b>总览</b></button>
+    <button class="ai-chip" data-ai="mens" role="tab"><i>01</i><b>男装</b></button>
+    <button class="ai-chip" data-ai="plus" role="tab"><i>02</i><b>大码男装</b></button>
+    <button class="ai-chip" data-ai="boys" role="tab"><i>03</i><b>男童 / 男婴</b></button>
+    <button class="ai-chip" data-ai="girls" role="tab"><i>04</i><b>女童 / 女婴</b></button>
+    <button class="ai-chip" data-ai="inner" role="tab"><i>05</i><b>男内 / 童内</b></button>
+  </div>
+  <div class="ai-tools">
+    <button class="ai-tool" id="aiReloadBtn" type="button" title="重新载入当前手册" aria-label="重新载入">↻</button>
+    <a class="ai-tool" id="aiOpenBtn" href="#" target="_blank" rel="noopener" title="在新窗口打开当前手册" aria-label="新窗口打开">↗</a>
+  </div>
+</div>
+
+<div class="ai-grid" id="aiGrid">
+  <button class="ai-card" type="button" data-ai="mens">
+    <div class="ai-cover"><span class="ai-big">01</span><span class="ai-tag">男装 · 出图方法论</span></div>
+    <div class="ai-card-body">
+      <h3>男装 · AI 出图，从第一张开始</h3>
+      <p>人模与区域（族裔 × 区域占比怎么选）、场景与品类（场景适配、常用背景与姿势）、产出主图（关键项怎么定）。</p>
+      <div class="ai-card-foot"><span>3 章 · 437 张参考图</span><span class="ai-go">打开手册 →</span></div>
+    </div>
+  </button>
+
+  <button class="ai-card" type="button" data-ai="plus">
+    <div class="ai-cover"><span class="ai-big">02</span><span class="ai-tag">大码男装 · 样本册</span></div>
+    <div class="ai-card-body">
+      <h3>大码男装 · 视觉样本册 第二辑</h3>
+      <p>13 个品类款式的正侧面与静物参考：T恤、背心、短裤、风衣大衣、毛衣针织、棉服、牛仔裤、套装、外套夹克、卫衣连帽、长裤、正装、衬衫，并附视觉延展方向。</p>
+      <div class="ai-card-foot"><span>13 品类 · 437 张参考图</span><span class="ai-go">打开手册 →</span></div>
+    </div>
+  </button>
+
+  <button class="ai-card" type="button" data-ai="boys">
+    <div class="ai-cover"><span class="ai-big">03</span><span class="ai-tag">童装 · 区域样本册</span></div>
+    <div class="ai-card-body">
+      <h3>男童 / 男婴 · 区域视觉样本册</h3>
+      <p>五区域 × 裔群 × 年龄段交叉的视觉参考，交互式切换与逐图放大，用于判断不同市场的面孔、体型与穿搭基调。</p>
+      <div class="ai-card-foot"><span>5 区域 · 143 张参考图</span><span class="ai-go">打开手册 →</span></div>
+    </div>
+  </button>
+
+  <button class="ai-card" type="button" data-ai="girls">
+    <div class="ai-cover"><span class="ai-big">04</span><span class="ai-tag">童装 · 区域样本册</span></div>
+    <div class="ai-card-body">
+      <h3>女童 / 女婴 · 区域视觉样本册</h3>
+      <p>五区域 × 裔群 × 年龄段交叉的视觉参考，交互式切换与逐图放大，覆盖婴儿到少女线的风格区间。</p>
+      <div class="ai-card-foot"><span>5 区域 · 136 张参考图</span><span class="ai-go">打开手册 →</span></div>
+    </div>
+  </button>
+
+  <button class="ai-card" type="button" data-ai="inner">
+    <div class="ai-cover"><span class="ai-big">05</span><span class="ai-tag">内衣 · 提示词手册</span></div>
+    <div class="ai-card-body">
+      <h3>男内 / 童内 · 主图提示词手册</h3>
+      <p>按品类与卖点整理的主图提示词条目与出图规格，示例图逐条对应，可直接挑选复用。</p>
+      <div class="ai-card-foot"><span>提示词手册 · 2,128 张参考图</span><span class="ai-go">打开手册 →</span></div>
+    </div>
+  </button>
+</div>
+
+<div class="ai-viewer" id="aiViewer" hidden>
+  <div class="ai-vhead">
+    <div>
+      <div class="ai-vno" id="aiVno">01 / 05</div>
+      <h3 id="aiVtitle">手册</h3>
+    </div>
+    <div class="ai-vmeta" id="aiVmeta"></div>
+  </div>
+  <div class="ai-frame-box">
+    <div class="ai-loading" id="aiLoading"><span class="ai-spin"></span>正在载入手册…</div>
+    <iframe id="aiFrame" class="ai-frame" title="AI 生图手册" loading="lazy" referrerpolicy="no-referrer"></iframe>
+  </div>
+  <div class="ai-vfoot" id="aiVfoot">手册为独立页面，内部自带导航；如需全屏阅读请点右上角 ↗。</div>
+</div>
+</div>
+
+<script id="ai-tools-logic">
+(function(){
+  'use strict';
+  /* 页面初始化会重写地址栏，doc 参数需在脚本解析阶段先快照 */
+  var INIT_DOC = (function(){ try{ return new URLSearchParams(location.search).get('doc') || ''; }catch(e){ return ''; } })();
+  function boot(){
+  var DOCS = {
+    mens:  {no:'01', name:'男装 · AI 出图，从第一张开始', meta:'3 章 · 437 张参考图', src:'ai-tools/01-mens-ai-guide.html'},
+    plus:  {no:'02', name:'大码男装 · 视觉样本册 第二辑', meta:'13 品类 · 437 张参考图', src:'ai-tools/02-plus-size-mens.html'},
+    boys:  {no:'03', name:'男童 / 男婴 · 区域视觉样本册', meta:'5 区域 × 裔群 × 年龄段 · 143 张', src:'ai-tools/03-boys-visual-atlas.html'},
+    girls: {no:'04', name:'女童 / 女婴 · 区域视觉样本册', meta:'5 区域 × 裔群 × 年龄段 · 136 张', src:'ai-tools/04-girls-visual-atlas.html'},
+    inner: {no:'05', name:'男内 / 童内 · 主图提示词手册', meta:'提示词手册 · 2,128 张参考图', src:'ai-tools/05-innerwear-prompt-guide.html'}
+  };
+  var ORDER = ['mens','plus','boys','girls','inner'];
+  var current = 'overview';
+  var loaded = {};
+
+  var nav = document.getElementById('aiNav');
+  var grid = document.getElementById('aiGrid');
+  var viewer = document.getElementById('aiViewer');
+  var frame = document.getElementById('aiFrame');
+  var loading = document.getElementById('aiLoading');
+  var vno = document.getElementById('aiVno');
+  var vtitle = document.getElementById('aiVtitle');
+  var vmeta = document.getElementById('aiVmeta');
+  var vfoot = document.getElementById('aiVfoot');
+  var openBtn = document.getElementById('aiOpenBtn');
+  var reloadBtn = document.getElementById('aiReloadBtn');
+  if(!nav || !viewer || !frame) return;
+
+  function markChips(id){
+    var chips = nav.querySelectorAll('.ai-chip');
+    for(var i=0;i<chips.length;i++){
+      var on = chips[i].getAttribute('data-ai') === id;
+      chips[i].classList.toggle('active', on);
+      chips[i].setAttribute('aria-selected', on ? 'true' : 'false');
+    }
+  }
+
+  function showOverview(){
+    current = 'overview';
+    markChips('overview');
+    grid.hidden = false;
+    viewer.hidden = true;
+    openBtn.setAttribute('disabled','disabled');
+    openBtn.setAttribute('href','#');
+    reloadBtn.setAttribute('disabled','disabled');
+    if(window.updateShareUrl) window.updateShareUrl();
+  }
+
+  function showDoc(id, opts){
+    var doc = DOCS[id];
+    if(!doc) return;
+    current = id;
+    markChips(id);
+    grid.hidden = true;
+    viewer.hidden = false;
+    vno.textContent = doc.no + ' / 05';
+    vtitle.textContent = doc.name;
+    vmeta.textContent = doc.meta;
+    openBtn.removeAttribute('disabled');
+    openBtn.setAttribute('href', doc.src);
+    reloadBtn.removeAttribute('disabled');
+    vfoot.textContent = '手册为独立页面，内部自带导航；如需全屏阅读请点右上角 ↗。文件位置：' + doc.src;
+
+    if(!loaded[id] || (opts && opts.reload)){
+      loaded[id] = 1;
+      loading.classList.remove('hide');
+      loading.innerHTML = '<span class="ai-spin"></span>正在载入手册…';
+      frame.src = doc.src;
+    } else {
+      loading.classList.add('hide');
+    }
+    try{ viewer.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){}
+    if(window.updateShareUrl) window.updateShareUrl();
+  }
+
+  frame.addEventListener('load', function(){
+    if(!frame.getAttribute('src')) return;
+    loading.classList.add('hide');
+  });
+  setTimeout(function(){
+    if(current !== 'overview' && !loading.classList.contains('hide') && frame.getAttribute('src')){
+      loading.innerHTML = '<span class="ai-spin"></span>手册较大（含内嵌图片），仍在载入…';
+    }
+  }, 6000);
+
+  nav.addEventListener('click', function(e){
+    var chip = e.target.closest ? e.target.closest('.ai-chip') : null;
+    if(!chip) return;
+    var id = chip.getAttribute('data-ai');
+    if(id === 'overview') showOverview(); else showDoc(id);
+  });
+
+  grid.addEventListener('click', function(e){
+    var card = e.target.closest ? e.target.closest('.ai-card') : null;
+    if(!card) return;
+    showDoc(card.getAttribute('data-ai'));
+  });
+
+  reloadBtn.addEventListener('click', function(){
+    if(current === 'overview') return;
+    loaded[current] = 0;
+    showDoc(current, {reload:true});
+  });
+
+  nav.addEventListener('keydown', function(e){
+    if(e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var chips = [].slice.call(nav.querySelectorAll('.ai-chip'));
+    var idx = chips.indexOf(document.activeElement);
+    if(idx < 0) return;
+    e.preventDefault();
+    var next = chips[(idx + (e.key === 'ArrowRight' ? 1 : chips.length - 1)) % chips.length];
+    if(next){ next.focus(); next.click(); }
+  });
+
+  /* 地址栏同步：tab=aitools 时附带 doc 参数，便于分享直达 */
+  var _upd = window.updateShareUrl;
+  window.updateShareUrl = function(){
+    if(typeof _upd === 'function') _upd.apply(this, arguments);
+    try{
+      if(typeof currentTab === 'undefined' || currentTab !== 'aitools') return;
+      var href = location.href;
+      var base = href.split('?')[0].split('#')[0];
+      var q = /[?]/.test(href) ? href.split('?')[1].split('#')[0] : '';
+      var p = new URLSearchParams(q);
+      if(current === 'overview') p.delete('doc'); else p.set('doc', current);
+      var u = p.toString() ? base + '?' + p.toString() : base;
+      if(location.href !== u) history.replaceState(null, '', u);
+    }catch(e){}
+  };
+
+  /* 首次进入：还原 doc 参数 */
+  function restore(){
+    var doc = '';
+    try{ doc = new URLSearchParams(location.search).get('doc') || ''; }catch(e){}
+    if(!doc && INIT_DOC){ doc = INIT_DOC; }
+    INIT_DOC = '';
+    if(doc && DOCS[doc] && document.getElementById('tab-aitools').classList.contains('active')){
+      showDoc(doc);
+    } else {
+      showOverview();
+    }
+  }
+  window.aiToolsRestore = restore;
+
+  /* 切到本 Tab 时刷新状态 */
+  var _switch = window.switchTab;
+  window.switchTab = function(name){
+    var ret;
+    if(typeof _switch === 'function') ret = _switch.apply(this, arguments);
+    if(name === 'aitools' && typeof restore === 'function'){ setTimeout(restore, 0); }
+    return ret;
+  };
+
+  var tabEl = document.getElementById('tab-aitools');
+  if(tabEl && tabEl.classList.contains('active')) restore(); else showOverview();
+  setTimeout(function(){ if(tabEl && tabEl.classList.contains('active')) restore(); }, 300);
+  }
+
+  function start(){
+    if(typeof window.switchTab !== 'function'){ setTimeout(start, 120); return; }
+    boot();
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
 
 </div>
 </div>

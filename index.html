@@ -3459,5 +3459,556 @@ function exportCat(){
 })();
 </script>
 
+<style id="v30-motion">
+/* ===================================================================
+   V30 · 交互与视觉增强层（只加动效与交互，不改内容、不改配色体系）
+   =================================================================== */
+
+/* ---------- 0. 顶部阅读进度 ---------- */
+#v30Progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:9990;pointer-events:none;
+  background:linear-gradient(90deg,#c7f000,#55d6ff 58%,#ff3d7f);
+  box-shadow:0 0 14px rgba(199,240,0,.55);transition:width .12s linear}
+
+/* ---------- 0.1 颗粒质感 ---------- */
+#v30Grain{position:fixed;inset:0;z-index:9989;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  background-size:160px 160px}
+
+/* ---------- 1. 滚动渐显 ---------- */
+.v30-reveal{opacity:0;transform:translate3d(0,22px,0);
+  transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1)}
+.v30-reveal.v30-in{opacity:1;transform:none}
+
+/* ---------- 2. Tab 切换过渡 ---------- */
+.tab-content.v30-tab-enter{animation:v30TabIn .52s cubic-bezier(.2,.7,.2,1)}
+@keyframes v30TabIn{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:none}}
+
+/* ---------- 3. 侧边导航 ---------- */
+.reference-sidebar .tab-btn{transition:background .28s ease,color .28s ease,padding-left .3s cubic-bezier(.2,.7,.2,1),border-color .28s ease}
+.reference-sidebar .tab-btn:hover{padding-left:24px!important}
+.reference-sidebar .nav-arrow{transition:transform .32s cubic-bezier(.2,.7,.2,1),color .32s ease}
+.reference-sidebar .tab-btn:hover .nav-arrow{transform:translateX(4px);color:#d9ff3f}
+.reference-sidebar .tab-btn.active .nav-arrow{transform:rotate(90deg);color:#d9ff3f}
+.reference-sidebar .side-anchor{position:relative;transition:padding-left .26s cubic-bezier(.2,.7,.2,1),color .26s ease,background .26s ease}
+.reference-sidebar .side-anchor::before{content:"";position:absolute;left:14px;top:50%;width:6px;height:6px;margin-top:-3px;
+  background:#d9ff3f;opacity:0;transform:scale(.2);transition:opacity .28s ease,transform .28s cubic-bezier(.2,.7,.2,1)}
+.reference-sidebar .side-anchor:hover{padding-left:32px!important}
+.reference-sidebar .side-anchor.active{padding-left:34px!important}
+.reference-sidebar .side-anchor.active::before{opacity:1;transform:none}
+.reference-sidebar .sidebar-share{transition:background .26s ease,color .26s ease,letter-spacing .3s ease}
+.reference-sidebar .sidebar-share:hover{letter-spacing:.05em}
+
+/* 侧栏入场编排 */
+@keyframes v30NavIn{from{opacity:0;transform:translate3d(-16px,0,0)}to{opacity:1;transform:none}}
+.reference-sidebar .sidebar-brand{animation:v30NavIn .62s cubic-bezier(.2,.7,.2,1) backwards}
+.reference-sidebar .sidebar-menu>*{animation:v30NavIn .62s cubic-bezier(.2,.7,.2,1) backwards}
+.reference-sidebar .sidebar-menu>*:nth-child(1){animation-delay:.06s}
+.reference-sidebar .sidebar-menu>*:nth-child(2){animation-delay:.10s}
+.reference-sidebar .sidebar-menu>*:nth-child(3){animation-delay:.16s}
+.reference-sidebar .sidebar-menu>*:nth-child(4){animation-delay:.20s}
+.reference-sidebar .sidebar-menu>*:nth-child(5){animation-delay:.24s}
+.reference-sidebar .sidebar-menu>*:nth-child(6){animation-delay:.28s}
+.reference-sidebar .sidebar-menu>*:nth-child(7){animation-delay:.32s}
+.reference-sidebar .sidebar-menu>*:nth-child(n+8){animation-delay:.36s}
+
+/* ---------- 4. 首屏 hero 编排 ---------- */
+@keyframes v30HeroIn{from{opacity:0;transform:translate3d(0,26px,0)}to{opacity:1;transform:none}}
+.trend-hero .hero-copy>*{animation:v30HeroIn .95s cubic-bezier(.2,.7,.2,1) backwards}
+.trend-hero .hero-copy>*:nth-child(1){animation-delay:.06s}
+.trend-hero .hero-copy>*:nth-child(2){animation-delay:.16s}
+.trend-hero .hero-copy>*:nth-child(3){animation-delay:.26s}
+.trend-hero .hero-copy>*:nth-child(4){animation-delay:.36s}
+
+/* ---------- 5. 图片卡片交互 ---------- */
+.style-shot img.shot-img{transition:transform .62s cubic-bezier(.2,.7,.2,1),filter .5s ease}
+.style-shot:hover img.shot-img{transform:scale(1.07)}
+.style-shot::after{content:"⤢";position:absolute;top:8px;right:8px;width:26px;height:26px;display:grid;place-items:center;
+  font-size:13px;line-height:1;color:#080a0d;background:rgba(217,255,63,.94);opacity:0;
+  transform:translateY(-6px) scale(.82);transition:opacity .26s ease,transform .32s cubic-bezier(.2,.7,.2,1);
+  pointer-events:none;z-index:3}
+.style-shot:hover::after{opacity:1;transform:none}
+.insight-img img{transition:transform .58s cubic-bezier(.2,.7,.2,1),filter .45s ease}
+.insight-img:hover img{transform:scale(1.06)}
+.docsimg-card img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.docsimg-card:hover img{transform:scale(1.04)}
+.hot-pair-card{transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease}
+.hot-pair-card:hover{transform:translateY(-3px);border-color:#3d4350;box-shadow:0 18px 40px -26px rgba(0,0,0,.95)}
+
+/* 图片加载淡入 */
+img.v30-img{opacity:0}
+img.v30-img-loaded{opacity:1;transition:opacity .55s ease}
+
+/* ---------- 6. 折叠面板 ---------- */
+.top-acc{transition:border-color .3s ease,box-shadow .3s ease,background .3s ease}
+.top-acc[open]{border-color:#3b4150!important;box-shadow:0 26px 62px -46px rgba(0,0,0,1)}
+.top-acc summary .top-arrow{transition:transform .32s cubic-bezier(.2,.7,.2,1),color .32s ease}
+.top-acc summary:hover .top-arrow{transform:translateX(3px)}
+.top-acc[open] summary .top-arrow{transform:rotate(90deg);color:#d9ff3f}
+.top-acc summary:focus-visible{outline:2px solid #d9ff3f;outline-offset:-2px}
+
+/* ---------- 7. 跳转高亮 ---------- */
+@keyframes v30Flash{0%{box-shadow:inset 0 0 0 2px rgba(217,255,63,.95),0 0 42px rgba(217,255,63,.24)}
+  100%{box-shadow:inset 0 0 0 2px rgba(217,255,63,0),0 0 0 rgba(217,255,63,0)}}
+.v30-flash{animation:v30Flash 1.5s cubic-bezier(.2,.7,.2,1)}
+
+/* ---------- 8. 词云 / 表格 / 按钮微交互 ---------- */
+.wc-word{transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .3s ease,filter .3s ease}
+.wc-word:hover{opacity:1;filter:brightness(1.3) drop-shadow(0 0 10px currentColor)}
+.reference-main tbody tr td:first-child{transition:box-shadow .24s ease}
+.reference-main tbody tr:hover td:first-child{box-shadow:inset 3px 0 0 var(--tech-acid)}
+.reference-main button:not(:disabled){transition:transform .16s ease,background .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease}
+.reference-main button:active:not(:disabled){transform:scale(.975)}
+.hot-cat-chip{transition:transform .24s cubic-bezier(.2,.7,.2,1),border-color .24s ease,color .24s ease,background .24s ease}
+.hot-cat-chip:hover{transform:translateY(-2px)}
+.th-sort,.btn-export,.btn-reset{transition:transform .2s ease,box-shadow .24s ease,background .22s ease,color .22s ease}
+
+/* ---------- 9. 灯箱（对话框交互） ---------- */
+#imgModal{background:rgba(6,7,10,.94)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  cursor:zoom-out;transition:opacity .18s ease}
+#imgModal.open{animation:v30LbIn .26s ease-out}
+#imgModal.v30-closing{opacity:0}
+@keyframes v30LbIn{from{opacity:0}to{opacity:1}}
+#imgModalImg{max-width:88vw!important;max-height:74vh!important;border-radius:0!important;
+  box-shadow:0 44px 96px -34px rgba(0,0,0,1),0 0 0 1px rgba(255,255,255,.09)!important;
+  cursor:grab;transition:transform .15s ease-out}
+#imgModal.open #imgModalImg{animation:v30ShotIn .46s cubic-bezier(.2,.7,.2,1)}
+@keyframes v30ShotIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
+#imgModal .modal-cap{opacity:0;animation:v30CapIn .46s .1s cubic-bezier(.2,.7,.2,1) forwards;
+  margin-top:14px;padding:9px 16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);
+  color:#e9ecf2;font-size:13.5px;letter-spacing:.02em;max-width:72vw;line-height:1.6}
+@keyframes v30CapIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#imgModal .modal-close{border-radius:0!important;transition:background .24s ease,transform .3s cubic-bezier(.2,.7,.2,1),color .24s ease}
+#imgModal .modal-close:hover{background:#d9ff3f!important;color:#080a0d;transform:rotate(90deg)}
+#imgModal .img-zoom-bar{background:rgba(12,14,19,.82)!important;border:1px solid rgba(255,255,255,.12);border-radius:0!important;backdrop-filter:blur(8px)}
+#imgModal .img-zoom-bar button{border-radius:0!important;transition:background .2s ease,color .2s ease}
+#imgModal .img-zoom-bar button:hover{background:#d9ff3f;color:#080a0d}
+.v30-lbnav{position:absolute;top:50%;width:54px;height:54px;margin-top:-27px;display:grid;place-items:center;
+  font:400 26px/1 Arial,sans-serif;color:#e8ecf4;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);cursor:pointer;z-index:10002;
+  transition:background .24s ease,color .24s ease,border-color .24s ease,transform .24s cubic-bezier(.2,.7,.2,1),opacity .24s ease}
+.v30-lbnav:hover{background:#d9ff3f;color:#080a0d;border-color:#d9ff3f;transform:scale(1.06)}
+.v30-lbprev{left:22px}
+.v30-lbnext{right:22px}
+.v30-lbcount{position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:10002;
+  font:700 11.5px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:#8f95a1;
+  padding:7px 14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+.v30-lbcount b{color:#d9ff3f}
+.v30-lbtip{position:absolute;left:0;right:0;bottom:14px;text-align:center;z-index:10002;
+  font-size:11.5px;letter-spacing:.08em;color:rgba(255,255,255,.42);pointer-events:none}
+
+/* ---------- 9.1 海报弹窗 / 日历 / 键盘可达 ---------- */
+.poster-modal.show{animation:v30LbIn .26s ease-out}
+.poster-modal .pm-img-wrap img{animation:v30ShotIn .46s cubic-bezier(.2,.7,.2,1)}
+.poster-modal .pm-close{transition:background .24s ease,transform .3s cubic-bezier(.2,.7,.2,1)}
+#tab-resource .calendar-day{transition:background .2s ease,transform .2s cubic-bezier(.2,.7,.2,1),border-color .2s ease}
+#tab-resource .calendar-day:hover{transform:translateY(-2px)}
+#tab-resource .live-card{transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .28s ease,background .28s ease}
+#tab-resource .live-card:hover{transform:translateY(-2px)}
+.reference-main button:focus-visible,
+.reference-main a:focus-visible,
+.reference-main select:focus-visible,
+.reference-main input:focus-visible{outline:2px solid #d9ff3f;outline-offset:2px}
+
+/* ---------- 10. 复制提示 / 返回顶部 ---------- */
+#globalCopyToast,.copy-toast{transition:opacity .26s cubic-bezier(.2,.7,.2,1),transform .26s cubic-bezier(.2,.7,.2,1)!important}
+#globalBackTop{transition:opacity .24s ease,transform .24s cubic-bezier(.2,.7,.2,1),visibility .24s ease,background .24s ease,border-color .24s ease,box-shadow .24s ease!important}
+#globalBackTop:hover{box-shadow:0 0 26px rgba(217,255,63,.45)}
+
+/* ---------- 11. 无障碍 / 减弱动效 ---------- */
+@media (prefers-reduced-motion:reduce){
+  .v30-reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .reference-sidebar .sidebar-brand,
+  .reference-sidebar .sidebar-menu>*,
+  .trend-hero .hero-copy>*,
+  .tab-content.v30-tab-enter,
+  #imgModal.open,
+  #imgModal.open #imgModalImg{animation:none!important}
+  #imgModal .modal-cap{opacity:1!important;animation:none!important;transform:none!important}
+  .style-shot:hover img.shot-img,
+  .insight-img:hover img,
+  .docsimg-card:hover img{transform:none!important}
+}
+@media (max-width:900px){
+  .v30-lbnav{width:44px;height:44px;margin-top:-22px;font-size:22px}
+  .v30-lbprev{left:8px}.v30-lbnext{right:8px}
+  .v30-lbtip{font-size:10.5px;bottom:8px}
+}
+</style>
+<script id="v30-motion">
+(function(){
+  'use strict';
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var canObs = ('IntersectionObserver' in window);
+  var body = document.body;
+
+  /* ============ 1. 顶部进度条 ============ */
+  var bar = document.createElement('div');
+  bar.id = 'v30Progress';
+  body.appendChild(bar);
+
+  /* ============ 2. 颗粒质感 ============ */
+  var grain = document.createElement('div');
+  grain.id = 'v30Grain';
+  body.appendChild(grain);
+
+  var rafPending = false;
+  function paintProgress(){
+    var de = document.documentElement;
+    var max = (de.scrollHeight - de.clientHeight) || 1;
+    var y = window.pageYOffset || de.scrollTop || 0;
+    bar.style.width = (Math.min(1, Math.max(0, y / max)) * 100).toFixed(2) + '%';
+    rafPending = false;
+  }
+  function onScroll(){ if(!rafPending){ rafPending = true; requestAnimationFrame(paintProgress); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  paintProgress();
+
+  /* ============ 3. 滚动渐显 ============ */
+  var REVEAL_SEL = '.reference-main .page-header,.reference-main .insight-card,' +
+    '.reference-main .table-wrapper,.reference-main .ops-card,.reference-main .docsimg-card,' +
+    '.reference-main .live-card,.reference-main .calendar-card,.reference-main .wc-box,' +
+    '.reference-main .keywords-section,.reference-main .insights-section,.reference-main .wordcloud-section,' +
+    '.top-acc,.hot-pair-card,.hot-ref-section-title,.top-index-head';
+  var io = null, STAGGER = 6;
+  if(canObs && !reduce){
+    io = new IntersectionObserver(function(entries){
+      for(var i=0;i<entries.length;i++){
+        var e = entries[i];
+        if(e.isIntersecting){
+          e.target.classList.add('v30-in');
+          io.unobserve(e.target);
+        }
+      }
+    }, {rootMargin:'0px 0px -6% 0px', threshold:0.03});
+  }
+  function prepare(scope){
+    if(!io) return;
+    var list = (scope || document).querySelectorAll(REVEAL_SEL);
+    for(var i=0;i<list.length;i++){
+      var el = list[i];
+      if(el.dataset && el.dataset.v30rv) continue;
+      if(el.classList.contains('v30-reveal')) continue;
+      el.dataset.v30rv = '1';
+      el.classList.add('v30-reveal');
+      el.style.transitionDelay = ((i % STAGGER) * 55) + 'ms';
+      io.observe(el);
+    }
+  }
+  prepare(document);
+
+  /* 动态渲染内容（洞察卡、表格行、分页后的卡片）重新纳入观察 */
+  var rescanTimer = null;
+  if(canObs && 'MutationObserver' in window){
+    var mo = new MutationObserver(function(muts){
+      var changed = false;
+      for(var i=0;i<muts.length;i++){
+        if(muts[i].addedNodes && muts[i].addedNodes.length){ changed = true; break; }
+      }
+      if(!changed) return;
+      clearTimeout(rescanTimer);
+      rescanTimer = setTimeout(function(){ prepare(document); initImages(document); }, 180);
+    });
+    var host = document.querySelector('.reference-main') || body;
+    mo.observe(host, {childList:true, subtree:true});
+  }
+
+  /* ============ 4. 图片加载淡入 ============ */
+  var imgObs = null;
+  function fadeIn(img){
+    if(img.dataset.v30fd) return;
+    img.dataset.v30fd = '1';
+    if(img.complete && img.naturalWidth > 0){ img.classList.add('v30-img-loaded'); return; }
+    img.classList.add('v30-img');
+    img.addEventListener('load', function(){ img.classList.add('v30-img-loaded'); }, {once:true});
+    img.addEventListener('error', function(){ img.classList.add('v30-img-loaded'); }, {once:true});
+  }
+  function initImages(scope){
+    var imgs = (scope || document).querySelectorAll('.reference-main img, .poster-modal img');
+    for(var i=0;i<imgs.length;i++) fadeIn(imgs[i]);
+  }
+  initImages(document);
+
+  /* ============ 5. Tab 切换过渡 ============ */
+  var _switchTab = window.switchTab;
+  window.switchTab = function(tabName, btn){
+    var ret;
+    if(typeof _switchTab === 'function') ret = _switchTab.apply(this, arguments);
+    var target = document.getElementById('tab-' + tabName);
+    if(target && !reduce){
+      target.classList.remove('v30-tab-enter');
+      void target.offsetWidth;
+      target.classList.add('v30-tab-enter');
+      var kids = [].slice.call(target.children).slice(0, 7);
+      for(var i=0;i<kids.length;i++){
+        try{
+          kids[i].animate(
+            [{opacity:0, transform:'translate3d(0,16px,0)'},{opacity:1, transform:'none'}],
+            {duration:540, delay:i*45, easing:'cubic-bezier(.2,.7,.2,1)', fill:'backwards'}
+          );
+        }catch(e){}
+      }
+    }
+    setTimeout(function(){ prepare(document); initImages(document); onScroll(); }, 70);
+    return ret;
+  };
+
+  /* ============ 6. 折叠面板展开动画 ============ */
+  document.addEventListener('toggle', function(e){
+    var d = e.target;
+    if(!d || !d.classList || !d.classList.contains('top-acc')) return;
+    if(!d.open || reduce) return;
+    var kids = [].slice.call(d.children).filter(function(c){ return c.tagName !== 'SUMMARY'; });
+    for(var i=0;i<kids.length;i++){
+      try{
+        kids[i].animate(
+          [{opacity:0, transform:'translate3d(0,-8px,0)'},{opacity:1, transform:'none'}],
+          {duration:430, delay:Math.min(i*45, 180), easing:'cubic-bezier(.2,.7,.2,1)'}
+        );
+      }catch(e){}
+    }
+    setTimeout(function(){ prepare(document); initImages(d); }, 120);
+  }, true);
+
+  /* ============ 7. 跳转高亮 ============ */
+  function flash(el){
+    if(!el || reduce) return;
+    el.classList.remove('v30-flash');
+    void el.offsetWidth;
+    el.classList.add('v30-flash');
+  }
+
+  /* 一键定位分类时闪一下目标区 */
+  var _openTopCategory = window.openTopCategory;
+  window.openTopCategory = function(i){
+    var ret;
+    if(typeof _openTopCategory === 'function') ret = _openTopCategory.apply(this, arguments);
+    setTimeout(function(){
+      var accs = document.querySelectorAll('#topAccordion .top-acc');
+      var acc = accs[i];
+      if(acc) flash(acc.querySelector('summary') || acc);
+    }, 430);
+    return ret;
+  };
+
+  /* 热搜分类锚点：平滑滚动 + 高亮 */
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('.hot-cat-chip');
+    if(!chip) return;
+    var href = chip.getAttribute('href') || '';
+    if(href.charAt(0) !== '#') return;
+    var t = document.getElementById(href.slice(1));
+    if(!t) return;
+    e.preventDefault();
+    var y = t.getBoundingClientRect().top + (window.pageYOffset || 0) - 78;
+    try{ window.scrollTo({top:Math.max(0, y), behavior:'smooth'}); }
+    catch(err){ window.scrollTo(0, Math.max(0, y)); }
+    flash(t);
+  });
+
+  /* ============ 8. 侧栏类目滚动高亮 ============ */
+  (function(){
+    var anchors = [].slice.call(document.querySelectorAll('#topSideSub .side-anchor'));
+    var accs = [].slice.call(document.querySelectorAll('#topAccordion .top-acc'));
+    if(!anchors.length || !accs.length) return;
+    var ticking = false;
+    function sync(){
+      ticking = false;
+      var top = document.getElementById('tab-top');
+      if(!top || !top.classList.contains('active')) return;
+      var best = 0, ref = 130;
+      for(var i=0;i<accs.length;i++){
+        var r = accs[i].getBoundingClientRect();
+        if(r.top - ref <= 0) best = i;
+      }
+      for(var j=0;j<anchors.length;j++) anchors[j].classList.toggle('active', j === best);
+    }
+    window.addEventListener('scroll', function(){
+      if(ticking) return; ticking = true; requestAnimationFrame(sync);
+    }, {passive:true});
+    setTimeout(sync, 400);
+  })();
+
+  /* ============ 9. 灯箱：相册化 + 键盘 / 手势 / 过渡 ============ */
+  var modal = document.getElementById('imgModal');
+  if(modal){
+    if(!modal.querySelector('.v30-lbnav')){
+      var prev = document.createElement('button');
+      prev.type = 'button'; prev.className = 'v30-lbnav v30-lbprev'; prev.innerHTML = '‹';
+      prev.setAttribute('aria-label', '上一张');
+      var next = document.createElement('button');
+      next.type = 'button'; next.className = 'v30-lbnav v30-lbnext'; next.innerHTML = '›';
+      next.setAttribute('aria-label', '下一张');
+      var count = document.createElement('div');
+      count.className = 'v30-lbcount';
+      var tip = document.createElement('div');
+      tip.className = 'v30-lbtip';
+      tip.textContent = '点击空白处关闭 · ← → 切换 · 滚轮缩放 · Esc 退出';
+      modal.appendChild(prev); modal.appendChild(next);
+      modal.appendChild(count); modal.appendChild(tip);
+    }
+
+    var gallery = [], gIdx = 0;
+
+    function captionOf(img){
+      var box = img.closest('.style-shot,.insight-img,.docsimg-card,.hot-shot');
+      if(box){
+        var cap = box.querySelector('.shot-caption,.docsimg-cap');
+        if(cap && (cap.textContent || '').trim()) return cap.textContent.trim();
+      }
+      return img.getAttribute('alt') || img.getAttribute('title') || '';
+    }
+
+    function buildGallery(src){
+      var all = document.querySelectorAll('.reference-main img, .poster-modal img');
+      var owner = null;
+      for(var i=0;i<all.length;i++){
+        var im = all[i];
+        if(im.currentSrc === src || im.src === src || im.getAttribute('src') === src){ owner = im; break; }
+      }
+      if(!owner) return [{src:src, cap:''}];
+      var scope = owner.closest('.hot-pair-imgs,.hot-pair-card,.top-visual,.insight-imgs,.docsimg-grid,.ops-card');
+      var pool = scope ? scope.querySelectorAll('img') : [owner];
+      var out = [];
+      for(var j=0;j<pool.length;j++){
+        var p = pool[j];
+        var s = p.currentSrc || p.getAttribute('src') || '';
+        if(!s || s.indexOf('data:') === 0) continue;
+        out.push({src:s, cap:captionOf(p)});
+      }
+      return out.length ? out : [{src:src, cap:''}];
+    }
+
+    function updateChrome(){
+      var c = modal.querySelector('.v30-lbcount');
+      if(c) c.innerHTML = gallery.length > 1 ? '<b>' + (gIdx + 1) + '</b> / ' + gallery.length : '';
+      var p = modal.querySelector('.v30-lbprev'), n = modal.querySelector('.v30-lbnext');
+      var single = gallery.length <= 1;
+      if(p) p.style.display = single ? 'none' : 'grid';
+      if(n) n.style.display = single ? 'none' : 'grid';
+    }
+
+    function showShot(i, capOverride){
+      if(!gallery.length) return;
+      gIdx = (i + gallery.length) % gallery.length;
+      var item = gallery[gIdx];
+      var img = document.getElementById('imgModalImg');
+      if(!img) return;
+      img.style.animation = 'none';
+      void img.offsetWidth;
+      img.style.animation = '';
+      img.src = item.src;
+      imgScale = 1; imgOffsetX = 0; imgOffsetY = 0;
+      if(typeof applyImgTransform === 'function') applyImgTransform();
+      var cap = document.getElementById('imgModalCap');
+      if(cap) cap.textContent = capOverride || item.cap || '';
+      if(!reduce){
+        try{
+          img.animate(
+            [{opacity:0, transform:'scale(.93)'},{opacity:1, transform:'scale(1)'}],
+            {duration:380, easing:'cubic-bezier(.2,.7,.2,1)'}
+          );
+        }catch(e){}
+      }
+      updateChrome();
+    }
+
+    var _openImgModal = window.openImgModal;
+    window.openImgModal = function(src, cap){
+      gallery = buildGallery(src);
+      gIdx = 0;
+      for(var i=0;i<gallery.length;i++){ if(gallery[i].src === src){ gIdx = i; break; } }
+      if(typeof _openImgModal === 'function') _openImgModal(src, cap);
+      updateChrome();
+      var c = document.getElementById('imgModalCap');
+      if(c && cap) c.textContent = cap;
+      return;
+    };
+
+    var _closeImgModal = window.closeImgModal;
+    window.closeImgModal = function(ev){
+      if(ev && ev.target){
+        var t = ev.target;
+        if(t.closest && t.closest('.v30-lbnav,.img-zoom-bar')) return;
+        if(t.id === 'imgModalImg') return;
+      }
+      if(!modal.classList.contains('open') || modal.classList.contains('v30-closing')) return;
+      modal.classList.add('v30-closing');
+      var done = function(){
+        modal.classList.remove('open');
+        modal.classList.remove('v30-closing');
+        var img = document.getElementById('imgModalImg');
+        if(img){ img.src = ''; }
+        gallery = []; gIdx = 0;
+      };
+      if(reduce) done(); else setTimeout(done, 180);
+      if(typeof _closeImgModal === 'function' && !ev){ /* noop, keep signature */ }
+      return;
+    };
+
+    modal.addEventListener('click', function(e){
+      var t = e.target;
+      if(t.classList && t.classList.contains('v30-lbprev')){
+        e.stopPropagation(); showShot(gIdx - 1); return;
+      }
+      if(t.classList && t.classList.contains('v30-lbnext')){
+        e.stopPropagation(); showShot(gIdx + 1); return;
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(!modal.classList.contains('open')) return;
+      if(e.key === 'Escape'){ window.closeImgModal(); }
+      else if(e.key === 'ArrowLeft'){ e.preventDefault(); showShot(gIdx - 1); }
+      else if(e.key === 'ArrowRight'){ e.preventDefault(); showShot(gIdx + 1); }
+    });
+
+    var tsX = 0, tsY = 0;
+    modal.addEventListener('touchstart', function(e){
+      if(e.touches && e.touches.length === 1){ tsX = e.touches[0].clientX; tsY = e.touches[0].clientY; }
+    }, {passive:true});
+    modal.addEventListener('touchend', function(e){
+      if(!e.changedTouches || !e.changedTouches.length) return;
+      var dx = e.changedTouches[0].clientX - tsX;
+      var dy = e.changedTouches[0].clientY - tsY;
+      if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4){
+        showShot(dx > 0 ? gIdx - 1 : gIdx + 1);
+      }
+    }, {passive:true});
+  }
+
+  /* ============ 10. Hero 光晕跟随鼠标（轻微视差） ============ */
+  (function(){
+    var hero = document.querySelector('.trend-hero');
+    if(!hero || reduce) return;
+    if(!window.matchMedia || !window.matchMedia('(hover:hover)').matches) return;
+    var a = hero.querySelector('.hero-glow-a'), b = hero.querySelector('.hero-glow-b');
+    if(!a || !b) return;
+    var ticking = false, mx = 0, my = 0;
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width - .5;
+      my = (e.clientY - r.top) / r.height - .5;
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        a.style.transform = 'translate3d(' + (mx * 26).toFixed(1) + 'px,' + (my * 18).toFixed(1) + 'px,0)';
+        b.style.transform = 'translate3d(' + (-mx * 22).toFixed(1) + 'px,' + (-my * 16).toFixed(1) + 'px,0)';
+        ticking = false;
+      });
+    });
+    hero.addEventListener('mouseleave', function(){
+      a.style.transform = ''; b.style.transform = '';
+    });
+  })();
+
+  /* ============ 11. 动态渲染后补齐 ============ */
+  window.addEventListener('load', function(){
+    prepare(document); initImages(document); onScroll();
+  });
+  setTimeout(function(){ prepare(document); initImages(document); }, 900);
+})();
+</script>
+
 </body>
 </html>
